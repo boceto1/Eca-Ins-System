@@ -12,13 +12,28 @@ import {
     ACCESS_TOKEN,
     ROLES,
 } from './localStorageNames';
+import * as authService from '../../services/authService';
 
 const selectToken = makeSelectToken();
 
-export function* initializeAuth() {
-    //The token normally loads up from localStorage
-    // So we only have to check the store
+export function* loginRequestSaga({ payload }) {
+    try {
+            const response = yield call(authService.logIn,
+            payload.name,
+            payload.password);
+            yield put(setToken(response.token));
+            yield put(login.success('jean', 'student'));
+    } catch (error) {
+        if (e.statusCode === 401) {
+            yield put(login.failure('Invalid email or password'));
+          } else {
+            yield put(login.failure());
+          }
+    }
+}
 
-    const authToken = yield select(selectToken);
-    
+export default function*() {
+    yield all([
+        takeLatest(login.request.toString(), loginRequestSaga),
+    ])
 }

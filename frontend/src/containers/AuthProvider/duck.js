@@ -31,7 +31,7 @@ export const {
 } = createActions(
     {
         LOGIN: {
-            REQUEST: (email, password) => ({ email, password}),
+            REQUEST: (name, password) => ({ name, password }),
             SUCCESS: (user, rol) => ({
                 user,
                 rol,
