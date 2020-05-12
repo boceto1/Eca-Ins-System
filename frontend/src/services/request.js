@@ -27,7 +27,6 @@ function* request({
                 ? `${accessToken}`
                 : null;
             response = yield call(instance, { url, method, data, params, ...rest});
-            console.log(response)
             keepTrying = false;
         } catch (error) {
             keepTrying = false;

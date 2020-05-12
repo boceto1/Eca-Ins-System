@@ -41,8 +41,8 @@ function LoginPage ({ error, loading, authenticated, location, requestLogin }) {
                         />
                     </Information>
                     <Actions>
-                        <ActionButton onClick={() => requestLogin('Jean', 'Test')}>Login as Student</ActionButton>
-                        <ActionButton onClick={() => requestLogin('Karlo', 'Test2')}>Login as Professor</ActionButton>
+                        <ActionButton onClick={() => requestLogin('Jean', 'Test', 'student')}>Login as Student</ActionButton>
+                        <ActionButton onClick={() => requestLogin('Tatiana Gualotuña', '1234admin', 'professor')}>Login as Professor</ActionButton>
                     </Actions>
                 </Login>
             </Wrapper>

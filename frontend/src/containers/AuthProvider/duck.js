@@ -3,13 +3,13 @@ import produce from 'immer';
 import {
     AUTHENTICATED,
     ACCESS_TOKEN,
-    ROLES
+    ROL
 } from './localStorageNames';
 
 
 const getUserRolesFromStorage = () => {
     try{
-        return JSON.parse(window.localStorage.getItem(ROLES) || '[]');
+        return JSON.parse(window.localStorage.getItem(ROL) || '[]');
     } catch (e){
         return [];
     }
@@ -31,14 +31,14 @@ export const {
 } = createActions(
     {
         LOGIN: {
-            REQUEST: (name, password) => ({ name, password }),
+            REQUEST: (name, password, type) => ({ name, password, type }),
             SUCCESS: (user, rol) => ({
                 user,
                 rol,
             }),
             FAILURE: undefined,
         },
-        SET_TOKENS: (accessToken) => ({ accessToken }),
+        SET_TOKEN: (accessToken) => ({ accessToken }),
         LOGOUT: {
             BEFORE: () => null,
             AFTER: ()=> null,
@@ -55,6 +55,7 @@ export default handleActions(
         }), 
         [setToken]: produce((draft, { payload }) => {
             const { accessToken } = payload;
+            console.log(payload);
             draft.token = accessToken;
         }),
         [login.success]: produce((draft, { payload }) => {
