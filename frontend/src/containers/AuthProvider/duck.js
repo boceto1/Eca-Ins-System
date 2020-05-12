@@ -53,7 +53,7 @@ export default handleActions(
             draft.login = true;
             draft.error = null;
         }), 
-        [setTokens]: produce((draft, { payload }) => {
+        [setToken]: produce((draft, { payload }) => {
             const { accessToken } = payload;
             draft.token = accessToken;
         }),

@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+// import { Redirect } from 'react-router-dom';
 
 import { 
     Navbar, 
@@ -13,7 +15,11 @@ import {
     ActionButton,
 } from './Layout';
 
-function LoginPage () {
+function LoginPage ({ error, loading, authenticated, location, requestLogin }) {
+
+    if(authenticated){
+        console.log('Auth', authenticated);
+    }
     return(
         <>
             <Navbar>
@@ -35,8 +41,8 @@ function LoginPage () {
                         />
                     </Information>
                     <Actions>
-                        <ActionButton>Login as Student</ActionButton>
-                        <ActionButton>Login as Professor</ActionButton>
+                        <ActionButton onClick={() => requestLogin('Jean', 'Test')}>Login as Student</ActionButton>
+                        <ActionButton onClick={() => requestLogin('Karlo', 'Test2')}>Login as Professor</ActionButton>
                     </Actions>
                 </Login>
             </Wrapper>
@@ -44,5 +50,13 @@ function LoginPage () {
         </>
     );
 }
+
+LoginPage.prototype = {
+    error: PropTypes.string,
+    loading: PropTypes.bool,
+    authenticated: PropTypes.bool,
+    requestLogin: PropTypes.func,
+    location: PropTypes.shape({}),
+};
 
 export default LoginPage;

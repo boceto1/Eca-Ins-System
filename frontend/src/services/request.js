@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { put, call, select, race, take} from 'redux-saga/effects';
+import { call, select } from 'redux-saga/effects';
 import { makeSelectToken } from '../containers/AuthProvider/selector';
-import { setToken } from '../containers/AuthProvider/duck';
-import { response } from 'express';
+// import { setToken } from '../containers/AuthProvider/duck';
+// import { response } from 'express';
 
 const instance = axios.create({
-    baseURL: process.env.API_URL,
+    baseURL: 'http://localhost:3000/api',
 });
 
 const selectToken = makeSelectToken();
@@ -27,6 +27,7 @@ function* request({
                 ? `${accessToken}`
                 : null;
             response = yield call(instance, { url, method, data, params, ...rest});
+            console.log(response)
             keepTrying = false;
         } catch (error) {
             keepTrying = false;

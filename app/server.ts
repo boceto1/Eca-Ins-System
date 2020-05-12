@@ -4,6 +4,7 @@ import path from 'path';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import { MONGO_URI } from '../const';
 
 export class Server {
@@ -12,6 +13,7 @@ export class Server {
     constructor(app: Express){
         this.app = app;
 
+        this.app.use(cors());
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json());
         this.app.use(morgan('dev'));

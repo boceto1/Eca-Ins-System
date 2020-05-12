@@ -1,20 +1,20 @@
-
+import { call, put, all, takeLatest } from 'redux-saga/effects';
 
 import {
     login,
-    logout,
+    // logout,
     setToken
 } from './duck';
 
-import { makeSelectToken } from './selector';
-import {
-    AUTHENTICATED,
-    ACCESS_TOKEN,
-    ROLES,
-} from './localStorageNames';
+// import { makeSelectToken } from './selector';
+// import {
+//     AUTHENTICATED,
+//     ACCESS_TOKEN,
+//     ROLES,
+// } from './localStorageNames';
 import * as authService from '../../services/authService';
 
-const selectToken = makeSelectToken();
+// const selectToken = makeSelectToken();
 
 export function* loginRequestSaga({ payload }) {
     try {
@@ -24,7 +24,7 @@ export function* loginRequestSaga({ payload }) {
             yield put(setToken(response.token));
             yield put(login.success('jean', 'student'));
     } catch (error) {
-        if (e.statusCode === 401) {
+        if (error.statusCode === 401) {
             yield put(login.failure('Invalid email or password'));
           } else {
             yield put(login.failure());
