@@ -1,4 +1,4 @@
-import { call, put, all, takeLatest } from 'redux-saga/effects';
+import { call, put, all, takeLatest, select } from 'redux-saga/effects';
 
 import {
     login,
@@ -6,7 +6,7 @@ import {
     setToken
 } from './duck';
 
-// import { makeSelectToken } from './selector';
+import { makeSelectToken } from './selector';
 import {
     AUTHENTICATED,
     ACCESS_TOKEN,
@@ -14,7 +14,25 @@ import {
 } from './localStorageNames';
 import * as authService from '../../services/authService';
 
-// const selectToken = makeSelectToken();
+const selectToken = makeSelectToken();
+
+
+export function* initializeAuth() {
+    // The token normally loads from localStorage
+    // So we only have to check the store
+    const authToken = yield select(selectToken);
+
+    if(authToken) {
+        try {
+            const { name, type } =
+               yield call(authService.getUserInfo);
+               yield put(login.success(name, type));
+        } catch(e)
+        {
+            console.log('Not previous login', e);
+        }
+    }
+}
 
 export function* loginRequestSaga({ payload }) {
     try {
@@ -23,7 +41,6 @@ export function* loginRequestSaga({ payload }) {
             payload.password,
             payload.type);
             
-            console.log(response);
             if(response.token) {
                 console.log("I'm in the right place");
                 yield put(setToken(response.token));

@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { call, select } from 'redux-saga/effects';
 import { makeSelectToken } from '../containers/AuthProvider/selector';
-// import { setToken } from '../containers/AuthProvider/duck';
-// import { response } from 'express';
+
 
 const instance = axios.create({
     baseURL: 'http://localhost:3000/api',

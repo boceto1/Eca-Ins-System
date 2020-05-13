@@ -11,3 +11,13 @@ export function* logIn(name, password, type) {
     const { data } = yield call(request, config);
     return data;
 }
+
+export function* getUserInfo() {
+    const config = {
+        method: 'post',
+        url: '/auth/me',
+        bypassErrorHandler: true,
+    };
+    const { data } = yield call(request, config);
+    return data;
+}
