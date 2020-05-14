@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-// import { Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 import { 
     Navbar, 
@@ -17,9 +17,24 @@ import {
 
 function LoginPage ({ error, loading, authenticated, location, requestLogin }) {
 
+    const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
+
     if(authenticated){
-        console.log('Auth', authenticated);
+       const { from } = location.state || { from: '/'};
+       return <Redirect to={from} />;
     }
+
+    const handleChangeName = (event) =>
+        setName(event.target.value);
+    
+    const handleChangePass = (event) =>
+        setPassword(event.target.value);
+
+    const handleSubmit = (type) => {
+        requestLogin(name, password, type)
+    }
+
     return(
         <>
             <Navbar>
@@ -32,17 +47,21 @@ function LoginPage ({ error, loading, authenticated, location, requestLogin }) {
                         <InformationInput 
                             type="text"
                             placeholder="Put your name"
+                            value={name}
+                            onChange={handleChangeName}
                             required
                         />
                         <InformationInput 
                             type="password"
                             placeholder="Put your name"
+                            value={password}
+                            onChange={handleChangePass}
                             required
                         />
                     </Information>
                     <Actions>
-                        <ActionButton onClick={() => requestLogin('Jean', 'Test', 'student')}>Login as Student</ActionButton>
-                        <ActionButton onClick={() => requestLogin('Tatiana Gualotuña', '1234admin', 'professor')}>Login as Professor</ActionButton>
+                        <ActionButton onClick={() => handleSubmit('student')}>Login as Student</ActionButton>
+                        <ActionButton onClick={() => handleSubmit('professor')}>Login as Professor</ActionButton>
                     </Actions>
                 </Login>
             </Wrapper>

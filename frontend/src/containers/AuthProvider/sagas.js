@@ -42,11 +42,9 @@ export function* loginRequestSaga({ payload }) {
             payload.type);
             
             if(response.token) {
-                console.log("I'm in the right place");
                 yield put(setToken(response.token));
                 yield put(login.success(payload.name, payload.type));
             } else {
-                console.log("I'm in the wrong place");
                 yield put(login.failure('Invalid email or password'));
             }
     } catch (error) {
