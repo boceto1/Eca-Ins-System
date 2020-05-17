@@ -14,7 +14,7 @@ export function* logIn(name, password, type) {
 
 export function* getUserInfo() {
     const config = {
-        method: 'post',
+        method: 'get',
         url: '/auth/me',
         bypassErrorHandler: true,
     };

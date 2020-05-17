@@ -55,7 +55,6 @@ export default handleActions(
         }), 
         [setToken]: produce((draft, { payload }) => {
             const { accessToken } = payload;
-            console.log(payload);
             draft.token = accessToken;
         }),
         [login.success]: produce((draft, { payload }) => {

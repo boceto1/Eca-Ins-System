@@ -36,5 +36,5 @@ export const makeSelectToken = () =>
 export const makeSelectRol = () =>
     createSelector(
         selectAuth,
-        ({ rol }) => rol,
+        ({ userRol }) => userRol,
     );

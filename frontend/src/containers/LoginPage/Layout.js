@@ -3,12 +3,13 @@ import styled from 'styled-components';
 export const Navbar = styled.div`
     display: flex;
     background-color: #333d51;
-    align-items: baseline;   
+    align-items: baseline;  
 `;
 
 export const Link = styled.a`
     color: #F4F3EA;
     padding: 14px 15px;
+    cursor: pointer;
     text-decoration: none;
     text-align: center;
     font-size: 30px;
@@ -27,7 +28,7 @@ export const Footer = styled.div`
     display: flex;
     justify-content: flex-end;
     align-content: center;
-    padding: 0px 10px;
+    padding: 10px 20px;
 `;
 
 export const Wrapper = styled.div`

@@ -21,12 +21,11 @@ export function* initializeAuth() {
     // The token normally loads from localStorage
     // So we only have to check the store
     const authToken = yield select(selectToken);
-
     if(authToken) {
         try {
-            const { name, type } =
+            const { userInfo } =
                yield call(authService.getUserInfo);
-               yield put(login.success(name, type));
+               yield put(login.success(userInfo.name, userInfo.type));
         } catch(e)
         {
             console.log('Not previous login', e);
@@ -70,6 +69,7 @@ export function* handleLoginSuccess({ payload }) {
 
 export default function*() {
     yield all([
+        call(initializeAuth),
         takeLatest(login.request.toString(), loginRequestSaga),
         takeLatest(setToken.toString(), saveTokenOnStorage),
         takeLatest(login.success.toString(), handleLoginSuccess),
