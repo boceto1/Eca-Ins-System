@@ -3,12 +3,16 @@ import {
     createProfessorCtrl,
     deleteProfessorByIdCtrl,
     findProfessorByIdCtrl,
+    getAllProfessorsCtrl,
 } from '../controllers/professor.controller';
+
+import { checkTokenStudent } from '../controllers/middlewares/auth';
 
 const apiProfessor: Router = Router();
 
 apiProfessor.route('')
-    .post(createProfessorCtrl);
+    .post(createProfessorCtrl)
+    .get(checkTokenStudent, getAllProfessorsCtrl);
 
 apiProfessor.route('/:id')
     .get(findProfessorByIdCtrl)

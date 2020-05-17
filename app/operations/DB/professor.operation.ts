@@ -18,3 +18,5 @@ export const updateProfessorById = async (id: ObjectId, professor: Professor): P
 
 export const deleteProfessorById = async (id: ObjectId): Promise<any> =>
     PROFESSOR.findByIdAndDelete(id);
+
+export const getAllProfessors = async (): Promise<any> => PROFESSOR.find();
