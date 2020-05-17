@@ -5,7 +5,8 @@ import {
     createExtracurricularActivity,
     deleteExtracurricularActivityById,
     findExtracurricularActivityById,
-    updateExtracurricularActivityById
+    updateExtracurricularActivityById,
+    getAllExtracurricularActivitiesByStudent,
 } from '../operations/DB/eca.operation';
 import { findProfessorById } from '../operations/DB/professor.operation';
 import { findSoftSkillById } from '../operations/DB/softSkill.operation';
@@ -124,21 +125,24 @@ const verifyValidateECA = async (ecaId: ObjectId) => {
     return [verifiedProfessor, verifiedStudent].every(verified => verified === true);
 };
 
-export const requestECACtrl = async (req: Request, res: Response) => {
+export const requestECACtrl = async (req, res: Response) => {
     try {
-        const ecaRequestInformation = req.body;
-        const requestedECA = await requestECA(ecaRequestInformation);
+        const { title, idProfessor, description, evidenceLink } = req.body;
+        const { id:idStudent } = req.authData;
+
+        const requestedECA = await requestECA({ title, idStudent, idProfessor, description, evidenceLink });
         if (!requestedECA) {
             res.status(404).json({ message: 'Bad request' });
             return;
         }
-        res.status(200).json({ requestedECA });
+
+        res.status(200).json({ eca: { id: requestedECA._id, title: requestedECA.title, status: 'Processing' } });
     } catch (error) {
         res.status(500).json({ message: 'Error: ', error });
     }
 };
 
-export const approvedECACtrl = async (req: Request, res: Response) => {
+export const approvedECACtrl = async (req, res: Response) => {
     try {
         const approvedEcaRequestInfo = req.body;
         const approvedECA = await approveECA(approvedEcaRequestInfo);
@@ -152,7 +156,7 @@ export const approvedECACtrl = async (req: Request, res: Response) => {
     }
 };
 
-export const verifyECACtrl = async (req: Request, res: Response) => {
+export const verifyECACtrl = async (req, res: Response) => {
     const id: ObjectId = req.params.id;
     try {
         const verifiedECA = await verifyValidateECA(id);
@@ -162,7 +166,7 @@ export const verifyECACtrl = async (req: Request, res: Response) => {
     }
 };
 
-export const findECAByIdCtrl = async (req: Request, res: Response) => {
+export const findECAByIdCtrl = async (req, res: Response) => {
     const id: ObjectId = req.params.id;
     try {
         const foundECA = await findExtracurricularActivityById(id);
@@ -176,7 +180,7 @@ export const findECAByIdCtrl = async (req: Request, res: Response) => {
     }
 };
 
-export const deleteECAByIdCtrl = async (req: Request, res: Response) => {
+export const deleteECAByIdCtrl = async (req, res: Response) => {
     const id: ObjectId = req.params.id;
     try {
         const deletedECA = await deleteExtracurricularActivityById(id);
@@ -189,3 +193,24 @@ export const deleteECAByIdCtrl = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Error: ', error });
     }
 };
+
+export const getAllEcasByStudent = async (req, res: Response) => {
+    const { id }  = req.authData;
+    try {
+        const responseEcas = await getAllExtracurricularActivitiesByStudent(id);
+        if (!responseEcas) {
+            res.status(404).json({ message: 'ECA not found' });
+            return;
+        }
+        
+        const studentEcas = responseEcas.map(eca => ({ 
+            id: eca._id, 
+            title: eca.title, 
+            status: eca.professorSignature ? 'Approved' : 'Processing'  
+            }));
+        
+        res.status(200).json({ ecas: studentEcas });
+    } catch (error) {
+        res.status(500).json({ message: 'Error: ', error });
+    }
+}

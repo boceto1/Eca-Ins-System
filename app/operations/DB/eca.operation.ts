@@ -15,3 +15,6 @@ export const updateExtracurricularActivityById = async (id: ObjectId, eca: Extra
 
 export const deleteExtracurricularActivityById = async (id: ObjectId): Promise<any> =>
     ECA.findByIdAndDelete(id);
+
+export const getAllExtracurricularActivitiesByStudent = async (idStudent: string): Promise<any> =>
+    ECA.find({ idStudent });
