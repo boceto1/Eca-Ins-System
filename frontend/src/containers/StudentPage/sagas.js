@@ -28,13 +28,13 @@ export function* getProfessorsSaga () {
 }
 
 export function* insertEcaSaga({ payload }) {
-    console.log(payload);
     const { title, description, evidence, idProfessor } = payload;
     try {
-        const response = yield call(ecaService.requestEca({ title, description, evidence, idProfessor }));
+        const response = yield call(ecaService.requestEca, title, description, evidence, idProfessor );
         yield put(insertEca.success(response.eca));
     } catch (error) {
-        yield put(insertEca.error('Error', error));
+        console.log(error);
+        yield put(insertEca.failure('Error'));
     }
 }
 

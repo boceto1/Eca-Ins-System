@@ -32,3 +32,9 @@ export const makeSelectLoadingProfessors = () =>
         selectEcas,
         ({ loadingProfessor }) => loadingProfessor,
     )
+
+export const makeSelectSubmitting = () => 
+    createSelector(
+        selectEcas,
+        ({ submitting }) => submitting,
+    )

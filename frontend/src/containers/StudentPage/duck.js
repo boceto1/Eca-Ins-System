@@ -19,7 +19,7 @@ export const {
     INSERT_ECA: {
         REQUEST: (title, idProfessor, description, evidence) => ({
             title, idProfessor, description, evidence }),
-        SUCCESS: ( ecas ) => ({ ecas }),
+        SUCCESS: ( eca ) => ({ eca }),
         FAILURE: error => ({ error }),
     },
     GET_ECAS: {
@@ -48,7 +48,7 @@ export default handleActions(
         [insertEca.success]: produce((draft, { payload }) => {
             const { eca } = payload;
             draft.submitting = false;
-            draft.ecas = [...draft.ecas, eca];
+            draft.ecas = [...draft.ecas, eca ];
         }),
         [insertEca.failure]: produce((draft, { payload }) => {
             draft.submitting = false;
@@ -60,8 +60,8 @@ export default handleActions(
         }),
         [getEcas.success]: produce((draft, { payload }) => {
             const { ecas } = payload;
-            draft.loading = false;
             draft.ecas = ecas;
+            draft.loading = false;
         }),
         [getEcas.failure]: produce((draft, { payload }) => {
             draft.loading = false;

@@ -26,6 +26,7 @@ function StudentPage({
     professors,
     loading,
     loadingProfessor,
+    submitting,
     error,
     getEcas,
     getProfessors,
@@ -70,7 +71,6 @@ function StudentPage({
       setProfessor(event.target.value);  
 
     const handleInsertEca = () => {
-        console.log('I am here');
         insertEca(title, professor, description, evidence);
     }
        
@@ -133,7 +133,7 @@ function StudentPage({
                                     </EcaTableRow>
                                 </thead>
                                 <tbody>
-                                    {showStudentECAs()}
+                                    {showStudentECAs() || null}
                                 </tbody>
                             </SummarizeEcaTable>
                         </WrapSummarizeEca>
@@ -150,6 +150,7 @@ StudentPage.propTypes = {
     professors: PropTypes.arrayOf(PropTypes.shape({})),
     loading: PropTypes.bool,
     loadingProfessor: PropTypes.bool,
+    submitting: PropTypes.bool,
     error: PropTypes.string,
     insertEca: PropTypes.func,
     getEcas: PropTypes.func,

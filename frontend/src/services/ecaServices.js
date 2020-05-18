@@ -1,7 +1,7 @@
-import { call, retry } from 'redux-saga/effects';
+import { call } from 'redux-saga/effects';
 import request from './request';
 
-export function* getEcas(name, password, type) {
+export function* getEcas() {
     const config = {
         method: 'get',
         url: '/ecas',
@@ -13,10 +13,10 @@ export function* getEcas(name, password, type) {
 
 export function* requestEca(title, description, evidence, idProfessor) {
 
-    console.log(title);
     const config = {
         method: 'post',
         url: '/ecas/request',
+        data: { title, description, evidenceLink: evidence, idProfessor },
         bypassErrorHandler: true,
     };
 
