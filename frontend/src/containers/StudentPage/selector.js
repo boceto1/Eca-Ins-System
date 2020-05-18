@@ -26,3 +26,9 @@ export const makeSelectError = () =>
         selectEcas,
         ({ error }) => error,
     );
+
+export const makeSelectLoadingProfessors = () => 
+    createSelector(
+        selectEcas,
+        ({ loadingProfessor }) => loadingProfessor,
+    )

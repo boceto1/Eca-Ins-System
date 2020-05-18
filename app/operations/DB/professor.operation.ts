@@ -3,7 +3,6 @@ import PROFESSOR from '../../models/Professor';
 import { Professor } from '../../types';
 
 export const createProfessor = async (professor: Professor): Promise<any> => {
-    console.log('Professor', professor);
     const createdProfesor = new PROFESSOR(professor);
     const resposeProfessor = await createdProfesor.save();
     return resposeProfessor;

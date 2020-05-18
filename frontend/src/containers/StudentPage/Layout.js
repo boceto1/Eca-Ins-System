@@ -21,7 +21,7 @@ export const Wrapper = styled.div `
   flex-wrap: wrap;
 `;
 
-export const StudentForm = styled.form`
+export const StudentForm = styled.div`
   width: 55%;
   display: flex;
   flex: 1;
@@ -67,7 +67,17 @@ export const TextAreaElement = styled.textarea`
     margin-left: 15px;
 `;
 
-export const ButtomElement = styled.button`
+export const SelectElement = styled.select`
+    background: rgba(203, 208, 216, 0.8);
+    border-radius: 1px;
+    height: 30px;
+    padding: 2px;
+    margin-left: 15px;
+    min-width: 170px;
+`;
+
+
+export const ButtonElement = styled.button`
     width: 70px;
     height: 30px;
     background: #D3AC2B;

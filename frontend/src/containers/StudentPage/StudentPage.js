@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -16,75 +16,130 @@ import {
     SummarizeEcaTable,
     EcaTableRow,
     EcaTableTitle,
-    EcaTableContent
+    EcaTableContent,
+    SelectElement, 
+    ButtonElement,
 } from './Layout';
 
 function StudentPage({
     ecas,
     professors,
     loading,
+    loadingProfessor,
     error,
     getEcas,
     getProfessors,
     insertEca,
 }) {
 
-    console.log(getEcas)
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [evidence, setEvidence] = useState('');
+    const [professor, setProfessor ] = useState('');
 
-    useEffect(() => { 
+    useEffect(() => {
         getEcas();
     }, []);
 
+    const showStudentECAs = () => ecas.map(eca => (
+        <EcaTableRow>
+            <EcaTableContent>{eca.id}</EcaTableContent>
+            <EcaTableContent>{eca.title}</EcaTableContent>
+            <EcaTableContent>{eca.status}</EcaTableContent>
+        </EcaTableRow>
+    ));
+
+    const onHandleSelectProfessor = () => {
+        if(professors.length === 0) getProfessors();
+    }
+
+    const showProfessors = () => professors.map(professor => (
+        <option key={professor.id } value={professor.id}>{professor.name}</option>
+    ));
+
+    const handleChangeTitle = (event) =>
+      setTitle(event.target.value);
+
+    const handleChangeDescription = (event) =>
+      setDescription(event.target.value);
+    
+    const handleChangeEvidence = (event) =>
+      setEvidence(event.target.value);  
+
+    const handleChangeProfessor = (event) =>
+      setProfessor(event.target.value);  
+
+    const handleInsertEca = () => {
+        console.log('I am here');
+        insertEca(title, professor, description, evidence);
+    }
+       
     return (
         <>
             <Navbar>
                 <Link href='/'>ECA CHAIN</Link>
                 <Link href='/profile'>Profile</Link>
             </Navbar>
-            <Wrapper>
-                <StudentForm>
-                    <StudenLabelForm><h3>Apply for ECA</h3></StudenLabelForm>
-                    <StudenLabelForm>
-                        <StudenElementLabelForm>
-                            <TitleElement>Title:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TitleElement>
-                            <InputElement />
-                        </StudenElementLabelForm>
-                        <StudenElementLabelForm>
-                            <TitleElement>Evidence: </TitleElement>
-                            <InputElement />
-                        </StudenElementLabelForm>
-                    </StudenLabelForm>
-                    <StudenLabelForm>
-                        <StudenElementLabelForm>
-                            <TitleElement>Description: </TitleElement>
-                            <TextAreaElement />
-                        </StudenElementLabelForm>
-                        <StudenElementLabelForm>
-                            <TitleElement>Professor: </TitleElement>
-                            <InputElement />
-                        </StudenElementLabelForm>
-                    </StudenLabelForm>
-                </StudentForm>
-                <WrapSummarizeEca>
-                    <SummarizeEcaTable>
-                        <caption> My ECAs</caption>
-                        <thead>
-                            <EcaTableRow>
-                                <EcaTableTitle>Id</EcaTableTitle>
-                                <EcaTableTitle>Title</EcaTableTitle>
-                                <EcaTableTitle>Status</EcaTableTitle>
-                            </EcaTableRow>
-                        </thead>
-                        <tbody>
-                            <EcaTableRow>
-                                <EcaTableContent>1asd3ad...</EcaTableContent>
-                                <EcaTableContent>Hackaton Conecta Culturas</EcaTableContent>
-                                <EcaTableContent>Approved</EcaTableContent>
-                            </EcaTableRow>
-                        </tbody>
-                    </SummarizeEcaTable>
-                </WrapSummarizeEca>
-            </Wrapper>
+            {loading ? <h1>Loaging ...</h1>
+                : (
+                    <Wrapper>
+                        <StudentForm>
+                            <StudenLabelForm><h3>Apply for ECA</h3></StudenLabelForm>
+                            <StudenLabelForm>
+                                <StudenElementLabelForm>
+                                    <TitleElement>Title:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TitleElement>
+                                    <InputElement onChange={handleChangeTitle} />
+                                </StudenElementLabelForm>
+                                <StudenElementLabelForm>
+                                    <TitleElement>Evidence: </TitleElement>
+                                    <InputElement onChange={handleChangeEvidence} />
+                                </StudenElementLabelForm>
+                            </StudenLabelForm>
+                            <StudenLabelForm>
+                                <StudenElementLabelForm>
+                                    <TitleElement>Description: </TitleElement>
+                                    <TextAreaElement onChange={handleChangeDescription} />
+                                </StudenElementLabelForm>
+                                <StudenElementLabelForm>
+                                    <TitleElement>Professor: </TitleElement>
+                                    <SelectElement 
+                                      onClick = {onHandleSelectProfessor}
+                                      onChange = {handleChangeProfessor}
+                                    >
+                                        {
+                                            loadingProfessor ? ( <option value="">loading...</option>):
+                                            showProfessors()
+                                        }
+                                    </SelectElement>
+                                </StudenElementLabelForm>
+                            </StudenLabelForm>
+                            <StudenLabelForm>
+                                <StudenElementLabelForm />
+                                <StudenElementLabelForm>
+                                  <ButtonElement onClick={handleInsertEca}>
+                                      Apply
+                                  </ButtonElement>
+                                </StudenElementLabelForm>
+                            </StudenLabelForm>
+                        </StudentForm>
+                        <WrapSummarizeEca>
+                            <SummarizeEcaTable>
+                                <caption> My ECAs</caption>
+                                <thead>
+                                    <EcaTableRow>
+                                        <EcaTableTitle>Id</EcaTableTitle>
+                                        <EcaTableTitle>Title</EcaTableTitle>
+                                        <EcaTableTitle>Status</EcaTableTitle>
+                                    </EcaTableRow>
+                                </thead>
+                                <tbody>
+                                    {showStudentECAs()}
+                                </tbody>
+                            </SummarizeEcaTable>
+                        </WrapSummarizeEca>
+                    </Wrapper>
+                )
+            }
             <Footer >Jean Karlo Obando - 2020</Footer>
         </>
     )
@@ -94,6 +149,7 @@ StudentPage.propTypes = {
     ecas: PropTypes.arrayOf(PropTypes.shape({})),
     professors: PropTypes.arrayOf(PropTypes.shape({})),
     loading: PropTypes.bool,
+    loadingProfessor: PropTypes.bool,
     error: PropTypes.string,
     insertEca: PropTypes.func,
     getEcas: PropTypes.func,

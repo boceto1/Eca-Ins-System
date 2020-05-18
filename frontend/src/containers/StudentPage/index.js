@@ -9,7 +9,8 @@ import {
     makeSelectEcas,
     makeSelectProfessors,
     makeSelectLoading,
-    makeSelectError
+    makeSelectError,
+    makeSelectLoadingProfessors
 } from './selector';
 import saga from './sagas';
 
@@ -19,6 +20,7 @@ const mapStateToProps = state => ({
     ecas: makeSelectEcas()(state),
     professors: makeSelectProfessors()(state),
     loading: makeSelectLoading()(state),
+    loadingProfessor: makeSelectLoadingProfessors()(state),
     error: makeSelectError()(state),
 });
 

@@ -7,6 +7,8 @@ export const initialState = {
     ecas: [],
     professors: [],
     loading: false,
+    loadingProfessor: false,
+    submitting: false,
 }
 
 export const {
@@ -27,7 +29,7 @@ export const {
     },
     GET_PROFESSORS: {
         REQUEST: () => null,
-        SUCCESS: ecas  => ({ ecas }),
+        SUCCESS: professors  => ({ professors }),
         FAILURE: error => ({ error }),
     }
   },
@@ -37,19 +39,19 @@ export const {
 export default handleActions(
     {
         [insertEca.request]: produce((draft, { payload }) => {
-            draft.loading = true;
+            draft.submitting = true;
             draft.title = payload.title;
-            draft.idProfessor = payload.idProfessor; 
+            draft.idProfessor = payload.professor; 
             draft.description = payload.description; 
             draft.evidence = payload.evidence;
         }),
         [insertEca.success]: produce((draft, { payload }) => {
             const { eca } = payload;
-            draft.loading = false;
+            draft.submitting = false;
             draft.ecas = [...draft.ecas, eca];
         }),
         [insertEca.failure]: produce((draft, { payload }) => {
-            draft.loading = false;
+            draft.submitting = false;
             draft.error = payload;
         }),
         [getEcas.request]: produce( draft => {
@@ -66,16 +68,16 @@ export default handleActions(
             draft.error = payload;
         }),
         [getProfessors.request]: produce( draft => {
-            draft.loading = true;
+            draft.loadingProfessor = true;
             draft.error = null;
         }),
         [getProfessors.success]: produce((draft, { payload }) => {
             const { professors } = payload;
-            draft.loading = false;
+            draft.loadingProfessor = false;
             draft.professors = professors;
         }),
         [getProfessors.failure]: produce((draft, { payload }) => {
-            draft.loading = false;
+            draft.loadingProfessor = false;
             draft.error = payload;
         }),
     },
