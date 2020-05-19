@@ -11,6 +11,7 @@ import { get } from 'loadsh';
 
 import LoginPage from '../LoginPage/'
 import StudentPage from '../StudentPage';
+import EcaPage from '../EcaPage';
 
 import { makeSelectRol, makeSelectAuthenticated }  from '../AuthProvider/selector'
 
@@ -29,18 +30,10 @@ function App({ rol, authenticated }) {
     <Router>
         <Switch>
           <Route path="/login" component={LoginPage}/>
-          <Route path="/ecas"><ProfessorPage /></Route>
+          <Route exact path="/ecas"><ProfessorPage /></Route>
+          <Route exact path="/ecas/:id" component={EcaPage}/>
           <Route path="/me" component={StudentPage}/>
-          <Route path="/unauthorized"> <UnauthorizedPage />  </Route>
-          <Redirect
-            exact
-            from='/'
-            to= {
-              authenticated
-                ? 'me'
-                : '/login'
-            }
-          />
+          <Route path="/unauthorized"> <UnauthorizedPage /></Route>
         </Switch>
     </Router>
   );

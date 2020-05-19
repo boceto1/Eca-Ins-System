@@ -6,6 +6,7 @@ import Auth from '../Auth';
 import StudentPage from '../StudentPage'
 
 const AuthRoute = ({ allowed, component: Component, children, ...rest}) => {
+    console.log(!Component && children)
     if (!Component && children){
         return (
             <Auth allowed={allowed}>
@@ -13,7 +14,6 @@ const AuthRoute = ({ allowed, component: Component, children, ...rest}) => {
             </Auth>
         )
     }
-
     return (
         <Route
           {...rest}
@@ -41,7 +41,6 @@ function PrivateRoutes({ location, authenticated }){
             />
         );
     }
-
     return(
         <>
           <Switch>
