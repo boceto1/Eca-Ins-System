@@ -1,7 +1,7 @@
 import { createActions, handleActions } from 'redux-actions';
 import produce from 'immer';
 
-export const key = 'ecas';
+export const key = 'main-student';
 
 export const initialState = {
     ecas: [],

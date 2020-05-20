@@ -15,7 +15,7 @@ code {
     monospace;
 }
 
-h1, h2, h3, p, caption {
+h1, h2, h3, h4, p, caption, span, li {
   color: #333D51;
 
 }

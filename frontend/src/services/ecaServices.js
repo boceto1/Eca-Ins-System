@@ -11,6 +11,16 @@ export function* getEcas() {
     return data;
 }
 
+export function* getEca(id){
+    const config = {
+        method: 'get',
+        url: `/ecas/${id}`,
+        bypassErrorHandler: true,
+    };
+    const { data } = yield call(request, config);
+    return data;
+}
+
 export function* requestEca(title, description, evidence, idProfessor) {
 
     const config = {

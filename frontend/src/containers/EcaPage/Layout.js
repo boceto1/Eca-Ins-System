@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import {
   Navbar as BaseNavbar,
   Link as LinkBase,
-  Foote as BaseFooter,
+  Footer as BaseFooter,
 } from '../LoginPage/Layout';
 
 export const Navbar = BaseNavbar;
-export const Link = Link;
+export const Link = LinkBase;
 export const Footer = BaseFooter;
 
 export const Wrap = styled.div`
@@ -29,8 +29,10 @@ export const LabelElement = styled.div`
   flex: 30%;
 `;
 
-export const Title = styled.div`
+export const Title = styled.span`
   font-weight: bold;
 `;
 
-export const 
+export const Description = styled.p`
+  text-align: justify;
+`;
