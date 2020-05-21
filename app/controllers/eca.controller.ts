@@ -169,12 +169,19 @@ export const verifyECACtrl = async (req, res: Response) => {
 export const findECAByIdCtrl = async (req, res: Response) => {
     const id: ObjectId = req.params.id;
     try {
-        const foundECA = await findExtracurricularActivityById(id);
-        if (!foundECA) {
+        const resFoundECA = await findExtracurricularActivityById(id);
+        
+        if (!resFoundECA) {
             res.status(404).json({ message: 'ECA not found' });
             return;
         }
-        res.status(200).json({ ECA: foundECA });
+        const { professorSignature, ...elements} = resFoundECA;
+        const foundECA = resFoundECA._doc;
+        
+        delete foundECA.professorSignature;
+        delete foundECA.studentSignature;
+
+        res.status(200).json({ eca: foundECA });
     } catch (error) {
         res.status(500).json({ message: 'Error: ', error });
     }

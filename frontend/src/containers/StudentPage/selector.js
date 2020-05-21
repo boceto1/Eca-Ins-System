@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { initialState } from './duck';
 
-const selectEcas = state => state.ecas || initialState; 
+const selectEcas = state => state.mainStudent || initialState; 
 
 export const makeSelectEcas = () =>
     createSelector(

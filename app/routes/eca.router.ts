@@ -21,7 +21,7 @@ apiECA.post('/approve', approvedECACtrl);
 apiECA.get('/verify/:id', verifyECACtrl);
 
 apiECA.route('/:id')
-    .get(findECAByIdCtrl)
+    .get(checkUserToken, findECAByIdCtrl)
     .delete(deleteECAByIdCtrl);
 
 export default apiECA;

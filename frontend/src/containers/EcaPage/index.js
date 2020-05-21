@@ -1,5 +1,35 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import injectReducer from '../../utils/injectReducer';
+import injectSaga from '../../utils/injectSaga';
+
+import reducer, { getEca, key } from './duck';
+import {
+    makeSelectEca,
+    makeSelectLoading,
+    makeSelectError,
+} from './selector';
+import saga from './sagas';
 
 import EcaPage from './EcaPage';
 
-export default React.memo(EcaPage);
+const mapStateToProps = state => ({
+    eca: makeSelectEca()(state),
+    loading: makeSelectLoading()(state),
+    error: makeSelectError()(state),
+});
+
+const mapDispatchToProps = dispatch =>
+    bindActionCreators({
+        getEca: getEca.request,
+    }, dispatch);
+
+export default injectReducer({ key, reducer})(
+    injectSaga({ key, saga })(
+        connect(
+            mapStateToProps,
+            mapDispatchToProps,
+        )(React.memo(EcaPage)),
+    ),
+);

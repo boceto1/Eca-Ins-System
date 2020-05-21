@@ -1,7 +1,7 @@
 import { createActions , handleActions } from 'redux-actions';
 import produce from 'immer';
 
-export const key = 'ecas';
+export const key = 'ecaInfo';
 
 export const initialState = {
     eca: {},
@@ -23,8 +23,7 @@ export const {
 
 export default handleActions(
     {
-        [getEca.request]: produce((draft, { payload }) => {
-            draft.id = payload.id;
+        [getEca.request]: produce( draft => {
             draft.loading = true;
             draft.error = null;
         }),
