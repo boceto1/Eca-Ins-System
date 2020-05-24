@@ -18,6 +18,17 @@ function EcaPage({ eca, loading, error, getEca }) {
         getEca('5ec1bfe3b8457b0f78e6212f');
     }, []);
 
+
+    function showSoftSkills() {
+        if(Object.entries(eca).length !== 0){
+            if(eca.softSkills.length !==0){
+            return eca.softSkills.map(softSkill => <li>{softSkill}</li>) 
+            }else{
+                return (<li>No hay soft skills</li>)
+            }
+        }
+    }
+
     return (
         <>
             <Navbar>
@@ -30,20 +41,20 @@ function EcaPage({ eca, loading, error, getEca }) {
                         <LabelInfo>
                             <h2>
                                 <Title>Title: </Title>
-                {eca.title}
-              </h2>
+                                {eca.title}
+                            </h2>
                         </LabelInfo>
                         <LabelInfo>
                             <LabelElement>
                                 <h2>
                                     <Title>Id: </Title>
-                    {eca._id}
-                </h2>
+                                    {eca._id}
+                                </h2>
                             </LabelElement>
                             <LabelElement>
                                 <h2>
                                     <Title>Status: </Title>
-                    Processing
+                                    En Proceso
                 </h2>
                             </LabelElement>
                         </LabelInfo>
@@ -51,13 +62,13 @@ function EcaPage({ eca, loading, error, getEca }) {
                             <LabelElement>
                                 <h4>
                                     <Title>Student: </Title>
-                      Jean Karlo Obando
+                      {eca.idStudent}
                   </h4>
                             </LabelElement>
                             <LabelElement>
                                 <h4>
                                     <Title>Professor: </Title>
-                      Ing. Tatiana Gualotuña
+                      {eca.idProfessor}
                   </h4>
                             </LabelElement>
                         </LabelInfo>
@@ -65,20 +76,18 @@ function EcaPage({ eca, loading, error, getEca }) {
                             <Description>
                                 <Title>Description: </Title>
                                 {eca.description}
-                  </Description>
+                            </Description>
                         </LabelInfo>
                         <LabelInfo>
                             <h4><Title>Soft Skills</Title></h4>
                             <ul>
-                                <li>Communication</li>
-                                <li>Leadship</li>
-                                <li>Team Work</li>
+                                {showSoftSkills()}
                             </ul>
                         </LabelInfo>
                         <LabelInfo>
                             <h4>
                                 <Title>Link: </Title>
-                                <a href="#">www.google-drive/docs/challenge</a>
+                                <a href={eca.evidenceLink}>{eca.evidenceLink}</a>
                             </h4>
                         </LabelInfo>
                     </Wrap>
@@ -86,7 +95,6 @@ function EcaPage({ eca, loading, error, getEca }) {
             }
             <Footer >Jean Karlo Obando - 2020</Footer>
         </>
-        // <h1>React Page {location.match.params.id}</h1>
     )
 }
 
