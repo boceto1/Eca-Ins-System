@@ -5,6 +5,7 @@ import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
 
 import reducer, { getEca, key } from './duck';
+import { logout } from '../AuthProvider/duck';
 import {
     makeSelectEca,
     makeSelectLoading,
@@ -23,6 +24,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
     bindActionCreators({
         getEca: getEca.request,
+        logout,
     }, dispatch);
 
 export default injectReducer({ key, reducer})(

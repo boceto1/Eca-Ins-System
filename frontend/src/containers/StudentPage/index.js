@@ -5,6 +5,7 @@ import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
 
 import reducer, { getEcas, getProfessors, insertEca, key } from './duck';
+import { logout } from '../AuthProvider/duck';
 import { 
     makeSelectEcas,
     makeSelectProfessors,
@@ -31,6 +32,7 @@ const mapDispatchToProps = dispatch =>
         getEcas: getEcas.request,
         getProfessors: getProfessors.request,
         insertEca: insertEca.request,
+        logout,
     },dispatch);
 
 export default injectReducer({ key, reducer })(

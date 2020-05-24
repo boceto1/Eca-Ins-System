@@ -11,7 +11,7 @@ import {
     Description,
 } from './Layout';
 
-function EcaPage({ eca, loading, error, getEca }) {
+function EcaPage({ eca, loading, error, getEca, logout }) {
 
     useEffect(() => {
         // console.log(location.match.params.id);
@@ -29,11 +29,14 @@ function EcaPage({ eca, loading, error, getEca }) {
         }
     }
 
+    const handleLogOut = () => logout();
+
     return (
         <>
             <Navbar>
                 <Link>ECA CHAIN</Link>
                 <Link>Profile</Link>
+                <Link onClick={handleLogOut}>Salir</Link>
             </Navbar>
             {loading ? <h1>Loading...</h1>
                 : (

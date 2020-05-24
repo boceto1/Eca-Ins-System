@@ -31,6 +31,7 @@ function StudentPage({
     getEcas,
     getProfessors,
     insertEca,
+    logout,
 }) {
 
     const [title, setTitle] = useState('');
@@ -73,12 +74,15 @@ function StudentPage({
     const handleInsertEca = () => {
         insertEca(title, professor, description, evidence);
     }
+
+    const handleLogOut = () => logout();
        
     return (
         <>
             <Navbar>
                 <Link href='/'>ECA CHAIN</Link>
                 <Link href='/profile'>Profile</Link>
+                <Link onClick={handleLogOut}>Salir</Link>
             </Navbar>
             {loading ? <h1>Loaging ...</h1>
                 : (

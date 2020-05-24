@@ -39,10 +39,7 @@ export const {
             FAILURE: undefined,
         },
         SET_TOKEN: (accessToken) => ({ accessToken }),
-        LOGOUT: {
-            BEFORE: () => null,
-            AFTER: ()=> null,
-        }
+        LOGOUT: () => null,
     },
     { prefix: 'src/containers/AuthProvider'},
 );
@@ -69,7 +66,7 @@ export default handleActions(
             draft.authenticated = false;
             draft.error = payload;
         }),
-        [logout.after]: produce(draft => {
+        [logout]: produce(draft => {
             draft.authenticated = false;
             draft.user = {};
             draft.userRol = null;

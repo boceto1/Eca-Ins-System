@@ -1,8 +1,9 @@
 import { call, put, all, takeLatest, select } from 'redux-saga/effects';
+import { replace } from 'connected-react-router';
 
 import {
     login,
-    // logout,
+    logout,
     setToken
 } from './duck';
 
@@ -56,6 +57,13 @@ export function* loginRequestSaga({ payload }) {
     }
 }
 
+
+export function* handleLogout(){
+    window.localStorage.removeItem(AUTHENTICATED);
+    window.localStorage.removeItem(ROL);
+    yield put(replace('/login'));
+}
+
 export function* saveTokenOnStorage({ payload }){
     const { accessToken } = payload;
     window.localStorage.setItem(ACCESS_TOKEN, accessToken);
@@ -73,5 +81,6 @@ export default function*() {
         takeLatest(login.request.toString(), loginRequestSaga),
         takeLatest(setToken.toString(), saveTokenOnStorage),
         takeLatest(login.success.toString(), handleLoginSuccess),
+        takeLatest(logout.toString(), handleLogout),
     ])
 }
