@@ -11,6 +11,6 @@ app.use('/auth', authRoutes);
 app.use('/students', studentRoute);
 app.use('/professors', professorRoute);
 app.use('/ecas', ecaRoute);
-app.use('softskills', softSkills);
+app.use('/softSkills', softSkills);
 
 module.exports = app;

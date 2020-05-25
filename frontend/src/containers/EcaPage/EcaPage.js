@@ -9,24 +9,39 @@ import {
     LabelElement,
     Title,
     Description,
+    TextAreaElement,
+    SelectElement,
+    ButtonElement
 } from './Layout';
 
-function EcaPage({ eca, loading, error, getEca, logout }) {
+function EcaPage({ eca, loading, error, getEca, logout, rol, skills }) {
 
     useEffect(() => {
         // console.log(location.match.params.id);
         getEca('5ec1bfe3b8457b0f78e6212f');
     }, []);
 
-
     function showSoftSkills() {
-        if(Object.entries(eca).length !== 0){
-            if(eca.softSkills.length !==0){
-            return eca.softSkills.map(softSkill => <li>{softSkill}</li>) 
-            }else{
+        if (Object.entries(eca).length !== 0) {
+            if (eca.softSkills.length !== 0) {
+                return eca.softSkills.map(softSkill => <li>{softSkill}</li>)
+            } else {
                 return (<li>No hay soft skills</li>)
             }
         }
+    }
+
+    function showSoftSkillsToBeSelected() {
+    const ecas = skills.map(skill => <option value={skill._id}>{skill.name}</option>)
+        return (
+            <>
+                <TextAreaElement />
+                <SelectElement>
+                    {ecas}
+                </SelectElement>
+
+            </>
+        )
     }
 
     const handleLogOut = () => logout();
@@ -65,14 +80,14 @@ function EcaPage({ eca, loading, error, getEca, logout }) {
                             <LabelElement>
                                 <h4>
                                     <Title>Student: </Title>
-                      {eca.idStudent}
-                  </h4>
+                                    {eca.idStudent}
+                                </h4>
                             </LabelElement>
                             <LabelElement>
                                 <h4>
                                     <Title>Professor: </Title>
-                      {eca.idProfessor}
-                  </h4>
+                                    {eca.idProfessor}
+                                </h4>
                             </LabelElement>
                         </LabelInfo>
                         <LabelInfo>
@@ -82,10 +97,21 @@ function EcaPage({ eca, loading, error, getEca, logout }) {
                             </Description>
                         </LabelInfo>
                         <LabelInfo>
-                            <h4><Title>Soft Skills</Title></h4>
-                            <ul>
-                                {showSoftSkills()}
-                            </ul>
+                            {rol === 'professor' ? (
+                                <>
+                                <Title>Soft Skills</Title>
+                                <div>
+                                    {showSoftSkillsToBeSelected()}
+                                </div>
+                                </>
+                            ) : (
+                                    <>
+                                        <h4><Title>Soft Skills</Title></h4>
+                                        <ul>
+                                            {showSoftSkills()}
+                                        </ul>
+                                    </>
+                                )}
                         </LabelInfo>
                         <LabelInfo>
                             <h4>
@@ -93,7 +119,11 @@ function EcaPage({ eca, loading, error, getEca, logout }) {
                                 <a href={eca.evidenceLink}>{eca.evidenceLink}</a>
                             </h4>
                         </LabelInfo>
-                    </Wrap>
+                        {rol === 'professor' && (
+                            <ButtonElement >Approve</ButtonElement>
+                        )}
+                    </Wrap >
+
                 )
             }
             <Footer >Jean Karlo Obando - 2020</Footer>

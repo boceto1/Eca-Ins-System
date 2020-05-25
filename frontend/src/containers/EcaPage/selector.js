@@ -20,3 +20,9 @@ export const makeSelectError = () =>
         selectEca,
         ({ error }) => error,
     );
+    
+export const makeSelectSkills = () => 
+    createSelector(
+        selectEca,
+        ({ skills }) => skills,
+    );

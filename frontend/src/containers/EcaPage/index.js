@@ -10,7 +10,9 @@ import {
     makeSelectEca,
     makeSelectLoading,
     makeSelectError,
+    makeSelectSkills,
 } from './selector';
+import { makeSelectRol } from '../AuthProvider/selector';
 import saga from './sagas';
 
 import EcaPage from './EcaPage';
@@ -19,6 +21,8 @@ const mapStateToProps = state => ({
     eca: makeSelectEca()(state),
     loading: makeSelectLoading()(state),
     error: makeSelectError()(state),
+    rol: makeSelectRol()(state),
+    skills: makeSelectSkills()(state),
 });
 
 const mapDispatchToProps = dispatch =>
