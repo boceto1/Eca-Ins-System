@@ -8,13 +8,16 @@ export const createExtracurricularActivity = async (eca: ExtracurricularActivity
     return resposeECA;
 };
 
-export const findExtracurricularActivityById = async (id: ObjectId): Promise<any> => ECA.findById(id);
+export const findExtracurricularActivityById = async (id): Promise<any> => ECA.findById(id);
 
-export const updateExtracurricularActivityById = async (id: ObjectId, eca: ExtracurricularActivity): Promise<any> =>
+export const updateExtracurricularActivityById = async (id, eca: ExtracurricularActivity): Promise<any> =>
     ECA.findByIdAndUpdate(id, eca, { new: true });
 
-export const deleteExtracurricularActivityById = async (id: ObjectId): Promise<any> =>
+export const deleteExtracurricularActivityById = async (id): Promise<any> =>
     ECA.findByIdAndDelete(id);
 
 export const getAllExtracurricularActivitiesByStudent = async (idStudent: string): Promise<any> =>
     ECA.find({ idStudent });
+
+export const getAllExtracurricularActivitiesByProfessor = async (idProfessor: string): Promise<any> =>
+    ECA.find({ idProfessor });

@@ -7,6 +7,7 @@ import {
     findExtracurricularActivityById,
     updateExtracurricularActivityById,
     getAllExtracurricularActivitiesByStudent,
+    getAllExtracurricularActivitiesByProfessor,
 } from '../operations/DB/eca.operation';
 import { findProfessorById } from '../operations/DB/professor.operation';
 import { findSoftSkillById } from '../operations/DB/softSkill.operation';
@@ -217,6 +218,29 @@ export const getAllEcasByStudent = async (req, res: Response) => {
             }));
         
         res.status(200).json({ ecas: studentEcas });
+    } catch (error) {
+        res.status(500).json({ message: 'Error: ', error });
+    }
+}
+
+export const getAllProcessingEcasByProfessor = async (req, res: Response) => {
+    const { id }  = req.authData;
+    try {
+        const responseEcas = await getAllExtracurricularActivitiesByProfessor(id);
+        if (!responseEcas) {
+            res.status(404).json({ message: 'ECA not found' });
+            return;
+        }
+        
+        const professorEcas = responseEcas
+        .filter(eca => !eca.professorSignature)
+        .map(eca => ({ 
+            id: eca._id, 
+            title: eca.title, 
+            student: eca.idStudent,  
+            }));
+        
+        res.status(200).json({ ecas: professorEcas });
     } catch (error) {
         res.status(500).json({ message: 'Error: ', error });
     }

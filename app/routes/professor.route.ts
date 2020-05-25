@@ -6,13 +6,16 @@ import {
     getAllProfessorsCtrl,
 } from '../controllers/professor.controller';
 
-import { checkTokenStudent } from '../controllers/middlewares/auth';
+import { getAllProcessingEcasByProfessor } from '../controllers/eca.controller'
+import { checkTokenStudent, checkTokenProfessor } from '../controllers/middlewares/auth';
 
 const apiProfessor: Router = Router();
 
 apiProfessor.route('')
     .post(createProfessorCtrl)
-    .get(checkTokenStudent, getAllProfessorsCtrl);
+    .get(checkTokenProfessor, getAllProfessorsCtrl);
+
+apiProfessor.get('/ecas', checkTokenProfessor, getAllProcessingEcasByProfessor)
 
 apiProfessor.route('/:id')
     .get(findProfessorByIdCtrl)
