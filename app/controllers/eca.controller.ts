@@ -58,6 +58,7 @@ const requestECA = async (ecaInformation: EcaRequestInformation) => {
 };
 
 const approveECA = async (approvedRequestInfo: ApprovedRequestInformation) => {
+    console.log(approvedRequestInfo);
     const preEca: any = await findExtracurricularActivityById(new ObjectId(approvedRequestInfo.idECA));
     const eca: ExtracurricularActivity = preEca._doc;
     if (!eca) { return null; }
@@ -90,7 +91,11 @@ const approveECA = async (approvedRequestInfo: ApprovedRequestInformation) => {
 
     const approvedEca = updateExtracurricularActivityById(eca._id, eca);
 
-    return approvedEca;
+    return {
+        id: eca._id,
+        title: eca.title,
+        status: 'Approved',
+    };
 };
 
 const verifyValidateECA = async (ecaId: ObjectId) => {
@@ -151,7 +156,7 @@ export const approvedECACtrl = async (req, res: Response) => {
             res.status(404).json({ message: 'Bad request' });
             return;
         }
-        res.status(200).json({ approvedECA });
+        res.status(200).json({ eca: approvedECA });
     } catch (error) {
         res.status(500).json({ message: 'Error: ', error });
     }

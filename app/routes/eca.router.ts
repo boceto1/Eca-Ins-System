@@ -8,7 +8,7 @@ import {
     getAllEcasByStudent,
 } from '../controllers/eca.controller';
 
-import { checkUserToken, checkTokenStudent } from '../controllers/middlewares/auth';
+import { checkUserToken, checkTokenStudent, checkTokenProfessor } from '../controllers/middlewares/auth';
 
 const apiECA: Router = Router();
 
@@ -16,7 +16,7 @@ apiECA.route('')
   .get(checkUserToken, getAllEcasByStudent);
 
 apiECA.post('/request',checkTokenStudent,  requestECACtrl);
-apiECA.post('/approve', approvedECACtrl);
+apiECA.post('/approve', checkTokenProfessor, approvedECACtrl);
 
 apiECA.get('/verify/:id', verifyECACtrl);
 

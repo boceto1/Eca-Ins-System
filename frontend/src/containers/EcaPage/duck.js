@@ -5,14 +5,17 @@ export const key = 'ecaInfo';
 
 export const initialState = {
     eca: {},
+    approvedEca: {},
     skills: {},
     loading: false,
     error: null,
+    approving: false,
 }
 
 export const {
     getEca,
-    getSoftSkills, 
+    getSoftSkills,
+    approveEca, 
 } = createActions({
     GET_ECA: {
         REQUEST: id => ({ id }),
@@ -23,6 +26,11 @@ export const {
         REQUEST: () => null,
         SUCCESS: ( softSkills ) => ({ softSkills }),
         FAILURE: error => ({ error }),
+    },
+    APPROVE_ECA: {
+        REQUEST: ( id, idSoftSkills ) => ({ id, idSoftSkills }),
+        SUCCESS: ( eca ) => ({ eca }),
+        FAILURE: error => ({ error }),
     }
   },
   { prefix: 'src/containers/EcaPage' }
@@ -31,6 +39,7 @@ export const {
 export default handleActions(
     {
         [getEca.request]: produce( draft => {
+            draft.approvedEca = {};
             draft.loading = true;
             draft.error = null;
         }),
@@ -54,6 +63,19 @@ export default handleActions(
         }),
         [getSoftSkills.failure]: produce((draft, { payload })=> {
             draft.loading = false;
+            draft.error = payload;
+        }),
+        [approveEca.request]: produce((draft, { payload }) => {
+            draft.approving = true;
+            draft.error = null;
+        }),
+        [approveEca.success]: produce((draft, { payload }) => {
+            const { eca } = payload;
+            draft.approving = false;
+            draft.approvedEca = eca;
+        }),
+        [approveEca.failure]: produce((draft, { payload })=> {
+            draft.approving = false;
             draft.error = payload;
         }),
     },

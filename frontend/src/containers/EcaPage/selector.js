@@ -26,3 +26,15 @@ export const makeSelectSkills = () =>
         selectEca,
         ({ skills }) => skills,
     );
+
+export const makeSelectApprovedEca = () => 
+    createSelector(
+        selectEca,
+        ({ approveEca }) => approveEca,
+    );
+
+export const makeSelectApprovingEca = () => 
+    createSelector(
+        selectEca,
+        ({ approving }) => approving,
+    )

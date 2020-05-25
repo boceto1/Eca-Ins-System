@@ -4,13 +4,15 @@ import { bindActionCreators } from 'redux';
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
 
-import reducer, { getEca, key } from './duck';
+import reducer, { getEca, approveEca, key } from './duck';
 import { logout } from '../AuthProvider/duck';
 import {
     makeSelectEca,
     makeSelectLoading,
     makeSelectError,
     makeSelectSkills,
+    makeSelectApprovedEca,
+    makeSelectApprovingEca,
 } from './selector';
 import { makeSelectRol } from '../AuthProvider/selector';
 import saga from './sagas';
@@ -23,12 +25,15 @@ const mapStateToProps = state => ({
     error: makeSelectError()(state),
     rol: makeSelectRol()(state),
     skills: makeSelectSkills()(state),
+    approving: makeSelectApprovingEca()(state),
+    approvedEca: makeSelectApprovedEca()(state),
 });
 
 const mapDispatchToProps = dispatch =>
     bindActionCreators({
         getEca: getEca.request,
         logout,
+        approveEca: approveEca.request,
     }, dispatch);
 
 export default injectReducer({ key, reducer})(

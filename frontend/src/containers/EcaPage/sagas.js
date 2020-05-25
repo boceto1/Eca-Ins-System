@@ -2,6 +2,7 @@ import { call, put, takeLatest, all } from 'redux-saga/effects';
 import {
   getEca,
   getSoftSkills,
+  approveEca,
 } from './duck';
 
 import * as ecaService from '../../services/ecaServices';
@@ -20,8 +21,20 @@ export function* getEcaSaga ({ payload }) {
     }
 }
 
+export function* approveEcaSaga ({ payload }) {
+    const { id, idSoftSkills } = payload;
+    try {
+        const response = yield call(ecaService.approveEca, id, idSoftSkills);
+        yield put(approveEca.success(response.eca));
+    } catch (error) {
+        yield put(approveEca.failure('Error', error));
+    }
+}
+
+
 export default function*() {
     yield all([
         takeLatest(getEca.request.toString(), getEcaSaga),
+        takeLatest(approveEca.request.toString(), approveEcaSaga)
     ])
 }

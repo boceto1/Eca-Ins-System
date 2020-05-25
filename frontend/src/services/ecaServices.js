@@ -33,3 +33,15 @@ export function* requestEca(title, description, evidence, idProfessor) {
     const { data } = yield call(request, config);
     return data;
 }
+
+export function* approveEca(idECA, idSoftSkills) {
+    const config = {
+        method: 'post',
+        url: '/ecas/approve',
+        data: { idECA, idSoftSkills },
+        bypassErrorHandler: true,
+    };
+
+    const { data } = yield call(request, config);
+    return data;
+}

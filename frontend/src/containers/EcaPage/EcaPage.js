@@ -14,7 +14,18 @@ import {
     ButtonElement
 } from './Layout';
 
-function EcaPage({ eca, loading, error, getEca, logout, rol, skills }) {
+function EcaPage({ 
+    eca, 
+    approvedEca,
+    loading, 
+    approving,
+    error, 
+    rol, 
+    skills ,
+    getEca, 
+    logout, 
+    approveEca
+}) {
 
     useEffect(() => {
         // console.log(location.match.params.id);
@@ -56,6 +67,10 @@ function EcaPage({ eca, loading, error, getEca, logout, rol, skills }) {
         setSoftSkills(softSkills + name + '\n')
         setEcaSoftSkills(currentSoftSkills);
     }
+
+    const handleApproveEca = () => {
+        approveEca(eca._id, ecaSoftSkills);
+    }   
 
 
     return (
@@ -132,7 +147,7 @@ function EcaPage({ eca, loading, error, getEca, logout, rol, skills }) {
                             </h4>
                         </LabelInfo>
                         {rol === 'professor' && (
-                            <ButtonElement >Approve</ButtonElement>
+                            <ButtonElement  onClick={handleApproveEca}>Approve</ButtonElement>
                         )}
                     </Wrap >
 
