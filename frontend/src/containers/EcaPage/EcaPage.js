@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
     Navbar,
@@ -21,6 +21,9 @@ function EcaPage({ eca, loading, error, getEca, logout, rol, skills }) {
         getEca('5ec1bfe3b8457b0f78e6212f');
     }, []);
 
+    const [ecaSoftSkills, setEcaSoftSkills] = useState([]);
+    const [softSkills, setSoftSkills] = useState('');
+
     function showSoftSkills() {
         if (Object.entries(eca).length !== 0) {
             if (eca.softSkills.length !== 0) {
@@ -32,11 +35,11 @@ function EcaPage({ eca, loading, error, getEca, logout, rol, skills }) {
     }
 
     function showSoftSkillsToBeSelected() {
-    const ecas = skills.map(skill => <option value={skill._id}>{skill.name}</option>)
+    const ecas = skills.map(skill => <option value={skill._id+','+skill.name}>{skill.name}</option>)
         return (
             <>
-                <TextAreaElement />
-                <SelectElement>
+                <TextAreaElement value={softSkills}/>
+                <SelectElement onChange={handleSelectSoftSkills}>
                     {ecas}
                 </SelectElement>
 
@@ -45,6 +48,15 @@ function EcaPage({ eca, loading, error, getEca, logout, rol, skills }) {
     }
 
     const handleLogOut = () => logout();
+
+    const handleSelectSoftSkills = (event) => {
+        const [id, name] = event.target.value.split(',');
+        const currentSoftSkills = ecaSoftSkills;
+        currentSoftSkills.push(id);
+        setSoftSkills(softSkills + name + '\n')
+        setEcaSoftSkills(currentSoftSkills);
+    }
+
 
     return (
         <>
