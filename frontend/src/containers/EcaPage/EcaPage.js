@@ -29,7 +29,7 @@ function EcaPage({
 
     useEffect(() => {
         // console.log(location.match.params.id);
-        getEca('5ec1bfe3b8457b0f78e6212f');
+        getEca('5ed0f725220c70519424e54e');
     }, []);
 
     const [ecaSoftSkills, setEcaSoftSkills] = useState([]);

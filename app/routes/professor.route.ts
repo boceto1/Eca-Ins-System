@@ -7,13 +7,13 @@ import {
 } from '../controllers/professor.controller';
 
 import { getAllProcessingEcasByProfessor } from '../controllers/eca.controller'
-import { checkTokenStudent, checkTokenProfessor } from '../controllers/middlewares/auth';
+import { checkUserToken, checkTokenProfessor } from '../controllers/middlewares/auth';
 
 const apiProfessor: Router = Router();
 
 apiProfessor.route('')
     .post(createProfessorCtrl)
-    .get(checkTokenProfessor, getAllProfessorsCtrl);
+    .get(checkUserToken, getAllProfessorsCtrl);
 
 apiProfessor.get('/ecas', checkTokenProfessor, getAllProcessingEcasByProfessor)
 

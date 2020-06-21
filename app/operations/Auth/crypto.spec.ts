@@ -1,3 +1,4 @@
+import NodeRSA from 'node-rsa';
 import {
     signDocument,
     verifyDocumentSignature,
@@ -6,7 +7,6 @@ import {
     importKey
 }
     from './crypto';
-import NodeRSA from 'node-rsa';
 
 describe('Crypto Operations', () => {
 

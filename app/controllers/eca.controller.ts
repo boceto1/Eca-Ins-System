@@ -12,6 +12,7 @@ import {
 import { findProfessorById } from '../operations/DB/professor.operation';
 import { findSoftSkillById } from '../operations/DB/softSkill.operation';
 import { findStudentById } from '../operations/DB/student.operation';
+import { setECA } from '../operations/Chain';
 import { ExtracurricularActivity, Professor, Student } from '../types/';
 
 interface EcaRequestInformation {
@@ -29,11 +30,11 @@ interface ApprovedRequestInformation {
 
 const requestECA = async (ecaInformation: EcaRequestInformation) => {
     const eca = {} as ExtracurricularActivity;
-    const student = await findStudentById(ecaInformation.idStudent);
+    const student: Student = await findStudentById(ecaInformation.idStudent);
     if (!student) {
         return null;
     }
-    const professor = await findProfessorById(ecaInformation.idProfessor);
+    const professor: Professor = await findProfessorById(ecaInformation.idProfessor);
 
     if (!professor) {
         return null;
@@ -44,12 +45,12 @@ const requestECA = async (ecaInformation: EcaRequestInformation) => {
     eca.evidenceLink = ecaInformation.evidenceLink;
     eca.idStudent = ecaInformation.idStudent;
     eca.idProfessor = ecaInformation.idProfessor;
+    eca.studentKey = student.keys.publicKey;
+    eca.professorKey = professor.keys.publicKey;
 
     const signature = signDocument(JSON.stringify({
         title: eca.title,
         description: eca.description,
-        idStudent: eca.idStudent,
-        idProfessor: eca.idProfessor,
         evidenceLink: eca.evidenceLink,
     }), student.keys.privateKey);
     eca.studentSignature = signature;
@@ -58,7 +59,6 @@ const requestECA = async (ecaInformation: EcaRequestInformation) => {
 };
 
 const approveECA = async (approvedRequestInfo: ApprovedRequestInformation) => {
-    console.log(approvedRequestInfo);
     const preEca: any = await findExtracurricularActivityById(new ObjectId(approvedRequestInfo.idECA));
     const eca: ExtracurricularActivity = preEca._doc;
     if (!eca) { return null; }
@@ -79,8 +79,6 @@ const approveECA = async (approvedRequestInfo: ApprovedRequestInformation) => {
     const professorSignature = signDocument(JSON.stringify({
         title: eca.title,
         description: eca.description,
-        idStudent: eca.idStudent,
-        idProfessor: eca.idProfessor,
         evidenceLink: eca.evidenceLink,
         softSkills: eca.softSkills,
     }), professor.keys.privateKey);
@@ -90,6 +88,10 @@ const approveECA = async (approvedRequestInfo: ApprovedRequestInformation) => {
     eca.professorSignature = professorSignature;
 
     const approvedEca = updateExtracurricularActivityById(eca._id, eca);
+
+    const isPartOfBlockchain = await setECA(eca);
+
+    if (!isPartOfBlockchain) { return null; }
 
     return {
         id: eca._id,

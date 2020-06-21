@@ -4,6 +4,8 @@ const extracurricularActivitySchema = new Schema({
     title: { type: String, required: true },
     idStudent: { type: String, required: true },
     idProfessor: { type: String, required: true },
+    studentKey: { type: String, required: true },
+    professorKey: { type: String, required: true },
     description: { type: String, required: true },
     evidenceLink: { type: String, required: true },
     professorSignature: { type: String, default: null },

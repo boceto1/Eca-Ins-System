@@ -32,6 +32,8 @@ export interface ExtracurricularActivity extends CustomSchema {
     title: string;
     idStudent: ObjectId;
     idProfessor: ObjectId;
+    studentKey: string;
+    professorKey: string
     description: string;
     evidenceLink?: string;
     professorSignature: string;
