@@ -9,15 +9,15 @@ import {
 } from "react-router-dom";
 
 import LoginPage from '../LoginPage/'
-import StudentPage from '../StudentPage';
-import EcaPage from '../EcaPage';
-import ProfessorPage from '../ProfessorPage';
+// import StudentPage from '../StudentPage';
+// import EcaPage from '../EcaPage';
+// import ProfessorPage from '../ProfessorPage';
 
 import { makeSelectRol, makeSelectAuthenticated }  from '../AuthProvider/selector'
 
 import PrivateRoutes from './PrivateRoutes';
 
-const privateRoutesPath = '/:path(me)';
+const privateRoutesPath = '/:path(me|ecas)';
 
 const defaultRedirectByRole = {
   student: '/me',
@@ -26,21 +26,44 @@ const defaultRedirectByRole = {
 };
 
 function App({ rol, authenticated }) {
+  console.log(rol)
+
+
   return (
-    <Router>
-        <Switch>
-          <Route path="/login" component={LoginPage}/>
-          <Route exact path="/ecas" component={ProfessorPage} />
-          <Route exact path="/ecas/:id" component={EcaPage}/>
-          <Route path="/me" component={StudentPage}/>
-          <Route path="/unauthorized"> <UnauthorizedPage /></Route>
+    <>
+      <Switch>
+        <Route path="/login" component={LoginPage} />
+        <Route 
+            path={privateRoutesPath}
+            render= { ( { location }) => (
+              <PrivateRoutes location={location} authenticated={authenticated} />
+            )}
+          />
+          <Redirect 
+            exact
+            from="/"
+            to={
+              authenticated
+                ? defaultRedirectByRole[rol] || '/unauthorized'
+                : '/login'
+            }
+            />
+            <Route path="/unauthorized" component={UnauthorizedPage} />
+            <Route component={NotFoundPage} />
+      </Switch>
+      <Switch>
+          <Route path={privateRoutesPath} render={() => null} />
         </Switch>
-    </Router>
-  );
+    </>
+  )
 }
 
 function UnauthorizedPage() {
   return <h2>Unauthorized Page</h2>;
+}
+
+function NotFoundPage() {
+  return <h2>Not Found Page</h2>;
 }
 
 App.prototype = {
