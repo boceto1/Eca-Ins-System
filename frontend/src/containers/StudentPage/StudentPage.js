@@ -41,6 +41,7 @@ function StudentPage({
 
     useEffect(() => {
         getEcas();
+        getProfessors();
     }, []);
 
     const showStudentECAs = () => ecas.map(eca => (
@@ -50,10 +51,6 @@ function StudentPage({
             <EcaTableContent>{eca.status}</EcaTableContent>
         </EcaTableRow>
     ));
-
-    const onHandleSelectProfessor = () => {
-        if(professors.length === 0) getProfessors();
-    }
 
     const showProfessors = () => professors.map(professor => (
         <option key={professor.id } value={professor.id}>{professor.name}</option>
@@ -107,7 +104,6 @@ function StudentPage({
                                 <StudenElementLabelForm>
                                     <TitleElement>Professor: </TitleElement>
                                     <SelectElement 
-                                      onClick = {onHandleSelectProfessor}
                                       onChange = {handleChangeProfessor}
                                     >
                                         {

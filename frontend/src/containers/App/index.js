@@ -17,7 +17,7 @@ import { makeSelectRol, makeSelectAuthenticated }  from '../AuthProvider/selecto
 
 import PrivateRoutes from './PrivateRoutes';
 
-const privateRoutesPath = '/:path(me|ecas)';
+const privateRoutesPath = '/:path(me|ecas|profile)';
 
 const defaultRedirectByRole = {
   student: '/me',

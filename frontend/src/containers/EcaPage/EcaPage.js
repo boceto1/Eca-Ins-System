@@ -76,8 +76,10 @@ function EcaPage({
     return (
         <>
             <Navbar>
-                <Link>ECA CHAIN</Link>
-                <Link>Profile</Link>
+                <Link href='/'>ECA CHAIN</Link>
+                {rol === 'student' && (
+                    <Link>Profile</Link>
+                )}
                 <Link onClick={handleLogOut}>Salir</Link>
             </Navbar>
             {loading ? <h1>Loading...</h1>

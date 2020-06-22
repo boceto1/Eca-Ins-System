@@ -42,7 +42,7 @@ function ProfesorPage({
                 <Wrapper>
                     {loading ? <h1>Loading...</h1> : (
                         <>
-                            <Header><h2>Ecas por Revisar</h2></Header>
+                            <Header><h2>No checked ECAs</h2></Header>
                             <Table>
                                 <TableRow>
                                     <TableTitle>Id</TableTitle>
@@ -59,6 +59,15 @@ function ProfesorPage({
         </>
     );
 }
+
+ProfesorPage.prototype = {
+    ecas: PropTypes.array,
+    loading: PropTypes.bool,
+    error: PropTypes.bool,
+    getEcas: PropTypes.func,
+    logout: PropTypes.func
+}
+
 
 
 export default ProfesorPage;

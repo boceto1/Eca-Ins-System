@@ -6,6 +6,7 @@ import Auth from '../Auth';
 import StudentPage from '../StudentPage'
 import ProfessorPage from '../ProfessorPage';
 import EcaPage from '../EcaPage';
+import ProfilePage from '../ProfilePage';
 
 const AuthRoute = ({ allowed, component: Component, children, ...rest}) => {
     if (!Component && children){
@@ -58,6 +59,11 @@ function PrivateRoutes({ location, authenticated }){
                 allowed={['student', 'professor']}
                 exact path='/ecas/:id'
                 component={EcaPage}
+              />
+              <AuthRoute 
+                allowed={['student']}
+                exact path='/profile'
+                component={ProfilePage}
               />
           </Switch>
         </>
