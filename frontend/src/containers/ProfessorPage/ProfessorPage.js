@@ -22,10 +22,10 @@ function ProfesorPage({
 }) {
     useEffect(() => {
         getEcas();
-    }, []);
+    }, []); 
 
     const showEcas = () => ecas.map(eca => (<>
-        <TableRow>
+        <TableRow onClick={() => window.location.href = `/ecas/${eca.id}`}>
             <TableElement>{eca.id}</TableElement>
             <TableElement>{eca.title}</TableElement>
             <TableElement>{eca.student}</TableElement>
@@ -37,7 +37,6 @@ function ProfesorPage({
             <div>
                 <Navbar>
                     <Link href='/'>ECA CHAIN</Link>
-                    <Link href='/profile'>Profile</Link>
                     <Link onClick={() => logout()}>Salir</Link>
                 </Navbar>
                 <Wrapper>

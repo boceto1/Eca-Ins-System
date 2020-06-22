@@ -5,6 +5,7 @@ import Auth from '../Auth';
 
 import StudentPage from '../StudentPage'
 import ProfessorPage from '../ProfessorPage';
+import EcaPage from '../EcaPage';
 
 const AuthRoute = ({ allowed, component: Component, children, ...rest}) => {
     if (!Component && children){
@@ -33,7 +34,6 @@ AuthRoute.propTypes = {
 };
 
 function PrivateRoutes({ location, authenticated }){
-
     if(!authenticated) {
         return (
             <Redirect 
@@ -51,8 +51,13 @@ function PrivateRoutes({ location, authenticated }){
               />
               <AuthRoute 
                 allowed={['professor']}
-                path='/ecas'
+                exact path='/ecas'
                 component={ProfessorPage}
+              />
+              <AuthRoute 
+                allowed={['student', 'professor']}
+                exact path='/ecas/:id'
+                component={EcaPage}
               />
           </Switch>
         </>

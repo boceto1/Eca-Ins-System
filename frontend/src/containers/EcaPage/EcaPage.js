@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { isEmpty } from 'loadsh';
 
 import {
     Navbar,
@@ -14,7 +15,7 @@ import {
     ButtonElement
 } from './Layout';
 
-function EcaPage({ 
+function EcaPage({        
     eca, 
     approvedEca,
     loading, 
@@ -24,12 +25,11 @@ function EcaPage({
     skills ,
     getEca, 
     logout, 
-    approveEca
-}) {
-
+    approveEca,
+    match
+ }) {
     useEffect(() => {
-        // console.log(location.match.params.id);
-        getEca('5ed0f725220c70519424e54e');
+        getEca(match.params.id);
     }, []);
 
     const [ecaSoftSkills, setEcaSoftSkills] = useState([]);
@@ -124,7 +124,7 @@ function EcaPage({
                             </Description>
                         </LabelInfo>
                         <LabelInfo>
-                            {rol === 'professor' ? (
+                            {rol === 'professor' && !isEmpty(skills) ? (
                                 <>
                                 <Title>Soft Skills</Title>
                                 <div>

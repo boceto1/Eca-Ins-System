@@ -48,7 +48,6 @@ export function* loginRequestSaga({ payload }) {
                 yield put(login.failure('Invalid email or password'));
             }
     } catch (error) {
-        console.log(error);
         if (error.statusCode === 401) {
             yield put(login.failure('Invalid email or password'));
           } else {
@@ -59,6 +58,7 @@ export function* loginRequestSaga({ payload }) {
 
 
 export function* handleLogout(){
+    window.localStorage.removeItem(ACCESS_TOKEN);
     window.localStorage.removeItem(AUTHENTICATED);
     window.localStorage.removeItem(ROL);
     yield put(replace('/login'));

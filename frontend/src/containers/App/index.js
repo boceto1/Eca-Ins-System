@@ -26,9 +26,6 @@ const defaultRedirectByRole = {
 };
 
 function App({ rol, authenticated }) {
-  console.log(rol)
-
-
   return (
     <>
       <Switch>

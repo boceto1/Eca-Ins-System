@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { includes } from 'loadsh';
 
 const isAuthorized = (allowedRoles, userRol) => {
-    return includes(userRol, allowedRoles);
+    return includes(allowedRoles, userRol);
 }
 
 function Auth ({ allowed, userRol, notAuthorized, children }){
-    console.log(isAuthorized(allowed, userRol) ? children : notAuthorized)
     return isAuthorized(allowed, userRol) ? children : notAuthorized;
 }
 
