@@ -4,9 +4,9 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Auth from '../Auth';
 
 import StudentPage from '../StudentPage'
+import ProfessorPage from '../ProfessorPage';
 
 const AuthRoute = ({ allowed, component: Component, children, ...rest}) => {
-    console.log(!Component && children)
     if (!Component && children){
         return (
             <Auth allowed={allowed}>
@@ -48,6 +48,11 @@ function PrivateRoutes({ location, authenticated }){
                 allowed={['student']}
                 path='/me'
                 component={StudentPage}
+              />
+              <AuthRoute 
+                allowed={['professor']}
+                path='/ecas'
+                component={ProfessorPage}
               />
           </Switch>
         </>

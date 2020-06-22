@@ -9,9 +9,10 @@ import {
 
 const getUserRolesFromStorage = () => {
     try{
-        return JSON.parse(window.localStorage.getItem(ROL) || '[]');
+        return window.localStorage.getItem(ROL);
     } catch (e){
-        return [];
+        console.log(e);
+        return null;
     }
 };
 
