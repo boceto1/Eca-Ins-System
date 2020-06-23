@@ -14,6 +14,7 @@ import { findSoftSkillById } from '../operations/DB/softSkill.operation';
 import { findStudentById } from '../operations/DB/student.operation';
 import { setECA } from '../operations/Chain';
 import { ExtracurricularActivity, Professor, Student } from '../types/';
+import { getBalanceStudentEcas, getStudentEcas } from '../operations/Chain'
 
 interface EcaRequestInformation {
     title: string;
@@ -248,6 +249,36 @@ export const getAllProcessingEcasByProfessor = async (req, res: Response) => {
             }));
         
         res.status(200).json({ ecas: professorEcas });
+    } catch (error) {
+        res.status(500).json({ message: 'Error: ', error });
+    }
+}
+
+export const getEcasBalanceCtrl = async (req, res: Response) => {
+    const { id } = req.authData;
+    try {
+        const balanceEcas = await getBalanceStudentEcas(id);
+        if (!balanceEcas) {
+            res.status(404).json({ message: 'ECA not found' });
+            return;
+        }
+        
+        res.status(200).json({ balance: balanceEcas });
+    } catch (error) {
+        res.status(500).json({ message: 'Error: ', error });
+    }
+}
+
+export const getBlockchainEcasCtrl = async (req, res: Response) => {
+    const { id } = req.authData;
+    try {
+        const balanceEcas = await getStudentEcas(id);
+        if (!balanceEcas) {
+            res.status(404).json({ message: 'ECA not found' });
+            return;
+        }
+        
+        res.status(200).json({ balance: balanceEcas });
     } catch (error) {
         res.status(500).json({ message: 'Error: ', error });
     }

@@ -6,6 +6,8 @@ import {
     requestECACtrl,
     verifyECACtrl,
     getAllEcasByStudent,
+    getEcasBalanceCtrl,
+    getBlockchainEcasCtrl,
 } from '../controllers/eca.controller';
 
 import { checkUserToken, checkTokenStudent, checkTokenProfessor } from '../controllers/middlewares/auth';
@@ -19,6 +21,8 @@ apiECA.post('/request',checkTokenStudent,  requestECACtrl);
 apiECA.post('/approve', checkTokenProfessor, approvedECACtrl);
 
 apiECA.get('/verify/:id', verifyECACtrl);
+apiECA.get('/balance', checkTokenStudent, getEcasBalanceCtrl);
+apiECA.get('/blockchain', checkTokenStudent, getBlockchainEcasCtrl);
 
 apiECA.route('/:id')
     .get(checkUserToken, findECAByIdCtrl)
