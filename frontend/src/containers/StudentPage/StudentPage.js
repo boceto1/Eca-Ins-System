@@ -44,6 +44,12 @@ function StudentPage({
         getProfessors();
     }, []);
 
+    useEffect(() => {
+        if(professors.length > 0){
+            setProfessor(professors[0].id);
+        }
+    }, [professors]);
+
     const showStudentECAs = () => ecas.map(eca => (
         <EcaTableRow onClick={() => window.location.href = `/ecas/${eca.id}`}>
             <EcaTableContent>{eca.id}</EcaTableContent>
@@ -52,9 +58,19 @@ function StudentPage({
         </EcaTableRow>
     ));
 
-    const showProfessors = () => professors.map(professor => (
-        <option key={professor.id } value={professor.id}>{professor.name}</option>
-    ));
+    const showProfessors = () => {
+        if(professors.length !== 0){
+            return (<SelectElement 
+                onChange = {handleChangeProfessor}
+              >
+                  {
+                      professors.map((professor, index) =>  (
+                            <option key={professor.id } value={professor.id}>{professor.name}</option>
+                        ))
+                  }
+              </SelectElement>)
+        }
+    };
 
     const handleChangeTitle = (event) =>
       setTitle(event.target.value);
@@ -103,14 +119,7 @@ function StudentPage({
                                 </StudenElementLabelForm>
                                 <StudenElementLabelForm>
                                     <TitleElement>Professor: </TitleElement>
-                                    <SelectElement 
-                                      onChange = {handleChangeProfessor}
-                                    >
-                                        {
-                                            loadingProfessor ? ( <option value="">loading...</option>):
-                                            showProfessors()
-                                        }
-                                    </SelectElement>
+                                        {showProfessors()}
                                 </StudenElementLabelForm>
                             </StudenLabelForm>
                             <StudenLabelForm>

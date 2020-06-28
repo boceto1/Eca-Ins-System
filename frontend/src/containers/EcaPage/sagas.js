@@ -4,6 +4,7 @@ import {
   getSoftSkills,
   approveEca,
 } from './duck';
+import { replace } from 'connected-react-router';
 
 import * as ecaService from '../../services/ecaServices';
 import * as softSkills from '../../services/softSkillsService'; 
@@ -26,6 +27,7 @@ export function* approveEcaSaga ({ payload }) {
     try {
         const response = yield call(ecaService.approveEca, id, idSoftSkills);
         yield put(approveEca.success(response.eca));
+        yield put(replace('/'));
     } catch (error) {
         yield put(approveEca.failure('Error', error));
     }

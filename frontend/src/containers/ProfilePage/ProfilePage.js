@@ -1,26 +1,86 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { Navbar, Link, Footer, Wrapper, Header, Table, TableRow, TableTitle, TableElement, SoftSkillsList } from './Layout';
+import { 
+    Navbar, 
+    Link, 
+    Footer, 
+    Wrapper, 
+    Header, 
+    Table, 
+    TableRow, 
+    TableTitle, 
+    TableElement, 
+    SoftSkillsList 
+} from './Layout';
 
-function ProfilePage() {
+function ProfilePage({
+    balance,
+    ecas,
+    errorEcas,
+    errorBalance,
+    loadingEcas,
+    loadingBalance,
+    getBalance,
+    getBlockchainEcas,
+    logout,
+}) {
+    useEffect(() => {
+        getBalance();
+        getBlockchainEcas();
+    }, []);
+
+    const showSoftSkills = () => {
+        if(balance){
+            const softSkills = balance.balance.softSkills;
+            const renderedSkills = [];
+
+            for (const skill in softSkills) {
+                if (softSkills.hasOwnProperty(skill)) {
+                    const value = softSkills[skill];
+                    renderedSkills.push(<li>{skill}: {value}</li>)
+                }
+            }
+
+            return renderedSkills;
+        }
+    }
+
+    const showBlockchainEcas = () => {
+        if(ecas) {
+            return ecas.map( eca =>
+            <>
+                <TableRow>
+                    <TableElement>{eca.id}</TableElement>
+                    <TableElement>{eca.ecaInformation.studentInformation.title}</TableElement>
+                    <TableElement>{eca.ecaInformation.studentInformation.description}</TableElement>
+                </TableRow>
+            </>
+            );
+        }
+    }
+
+    const handleLogOut = () => logout();
 
     return (
         <>
             <Navbar>
                 <Link href='/'>ECA CHAIN</Link>
                 <Link href='/profile'>Profile</Link>
-                <Link onClick={() => {}}>Salir</Link>
+                <Link onClick={handleLogOut}>Salir</Link>
             </Navbar>
             <Wrapper>
                 <Header>
                     <h3>Approved ECAs</h3>
-                    <h4>Summary Soft Skills</h4>
+                    {loadingBalance ? (<h3>Loading Balance</h3>): (
+                      <>
+                      <h4>Summary Soft Skills {balance ? balance.balance.ecas : null}</h4>
+                        <ul>
+                          {showSoftSkills()}
+                        </ul>
+                      </>   
+                    ) }
                     <SoftSkillsList>
-                    <ul>
-                      <li>Comunicacion: 1</li>
-                      <li>Liderazgo: 4</li>
-                      <li>Pensamiento Critico: 5</li>
-                    </ul>
+
                 </SoftSkillsList>
                 <h3>List ECAs</h3>
                 </Header>
@@ -28,8 +88,12 @@ function ProfilePage() {
                     <TableRow>
                         <TableTitle>Id</TableTitle>
                         <TableTitle>Title</TableTitle>
-                        <TableTitle>Id Block</TableTitle>
-                        </TableRow>
+                        <TableTitle>Description</TableTitle>
+                    </TableRow>
+                    {loadingEcas || ecas.length === 0 ? 
+                       <h3>Loading Balance</h3>: 
+                        showBlockchainEcas()
+                    }
                 </Table>
             </Wrapper>
             <Footer >Jean Karlo Obando - 2020</Footer>

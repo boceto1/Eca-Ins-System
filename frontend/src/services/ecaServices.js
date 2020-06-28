@@ -45,3 +45,25 @@ export function* approveEca(idECA, idSoftSkills) {
     const { data } = yield call(request, config);
     return data;
 }
+
+export function* getBalanceSummary(){
+    const config = {
+        method: 'get',
+        url: '/ecas/balance',
+        bypassErrorHandler: true,
+    };
+
+    const { data } = yield call(request, config);
+    return data;
+}
+
+export function* getBlockchainEcas() {
+    const config = {
+        method: 'get',
+        url: '/ecas/blockchain',
+        bypassErrorHandler: true,
+    };
+
+    const { data } = yield call(request, config);
+    return data;
+}
