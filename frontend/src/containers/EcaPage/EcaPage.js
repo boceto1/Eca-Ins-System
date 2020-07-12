@@ -46,7 +46,8 @@ function EcaPage({
     }
 
     function showSoftSkillsToBeSelected() {
-    const ecas = skills.map(skill => <option value={skill._id+','+skill.name}>{skill.name}</option>)
+    const ecas = skills.map(skill => <option value={skill._id+','+skill.name}>{skill.name}</option>);
+    ecas.unshift(<option value="0" selected="selected" disabled>Select Soft Skill</option>)
         return (
             <>
                 <TextAreaElement value={softSkills}/>

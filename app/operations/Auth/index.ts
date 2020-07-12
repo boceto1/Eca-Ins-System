@@ -1,6 +1,7 @@
 import sha256 from 'crypto-js/sha256';
+import { ObjectId } from 'bson';
 import { Professor, Student } from '../../types';
-import { createNewToken } from '../Auth/jwt';
+import { createNewLoginToken, createNewPortfolioToken } from '../Auth/jwt';
 import {
   createProfessor,
   findProfessorByName,
@@ -92,7 +93,7 @@ export const login = async (
       return null;
     }
 
-    return createNewToken({ id: user._id, name: user.name, type });
+    return createNewLoginToken({ id: user._id, name: user.name, type });
   }
 
   if (type === 'professor') {
@@ -105,6 +106,10 @@ export const login = async (
       return null;
     }
 
-    return createNewToken({ id: user._id, name: user.name, type });
+    return createNewLoginToken({ id: user._id, name: user.name, type });
   }
 };
+
+export const sharePortfolio = async( idStudent) => {
+  return createNewPortfolioToken({ idStudent: new ObjectId(idStudent) });
+}

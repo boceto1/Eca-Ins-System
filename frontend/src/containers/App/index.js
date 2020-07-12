@@ -8,10 +8,8 @@ import {
   Redirect
 } from "react-router-dom";
 
-import LoginPage from '../LoginPage/'
-// import StudentPage from '../StudentPage';
-// import EcaPage from '../EcaPage';
-// import ProfessorPage from '../ProfessorPage';
+import LoginPage from '../LoginPage/';
+import ProfilePage from '../ProfilePage';
 
 import { makeSelectRol, makeSelectAuthenticated }  from '../AuthProvider/selector'
 
@@ -30,6 +28,7 @@ function App({ rol, authenticated }) {
     <>
       <Switch>
         <Route path="/login" component={LoginPage} />
+        <Route path='/portfolio/:token' component={ProfilePage}/>
         <Route 
             path={privateRoutesPath}
             render= { ( { location }) => (

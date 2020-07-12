@@ -1,9 +1,9 @@
-import { createNewToken, checkJwt } from './jwt';
+import { createNewLoginToken, checkLoginJwt } from './jwt';
 import { ObjectId } from 'bson';
 
 describe('*createNewToken', () => {
     it('should return a token string', () => {
-        const res = createNewToken({
+        const res = createNewLoginToken({
             id: new ObjectId('5d30ed75e16ddd116881b81f'),
             name: 'foo-user',
             type: 'student'
@@ -15,13 +15,13 @@ describe('*createNewToken', () => {
 describe('*checkJwt', () => {
     describe('when the token is correct', () => {
         it('should return an object data', () => {
-            const token = createNewToken({
+            const token = createNewLoginToken({
                 id: new ObjectId('5d30ed75e16ddd116881b81f'),
                 name: 'foo-user',
                 type: 'student'
             });
 
-            const res = checkJwt(token);
+            const res = checkLoginJwt(token);
 
             expect(res).toHaveProperty('id');
             expect(res).toHaveProperty('name');
@@ -32,7 +32,7 @@ describe('*checkJwt', () => {
     describe('when the token is invalid', () => {
         it('should return INVALID', () => {
             const token = 'Invalid-token';
-            const res = checkJwt(token);
+            const res = checkLoginJwt(token);
             expect(res).toBe('INVALID');
 
         });
@@ -40,7 +40,7 @@ describe('*checkJwt', () => {
     describe('when the token is expired', () => {
         it('should return EXPIRED', () => {
             const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkMzBlZDc1ZTE2ZGRkMTE2ODgxYjgxZiIsIm5hbWUiOiJmb28tdXNlciIsInR5cGUiOiJzdHVkZW50IiwiaWF0IjoxNTg3NjkwOTA5LCJleHAiOjE1ODc2OTA5MTB9.U9Wm5INCIsO468hnLChFrU2HB4cBDWFzpxQ7o9P-cNw';
-            const res = checkJwt(token);
+            const res = checkLoginJwt(token);
             expect(res).toBe('EXPIRED');
         });
     });

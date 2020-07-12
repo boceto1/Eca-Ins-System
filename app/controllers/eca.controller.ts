@@ -15,6 +15,8 @@ import { findStudentById } from '../operations/DB/student.operation';
 import { setECA } from '../operations/Chain';
 import { ExtracurricularActivity, Professor, Student } from '../types/';
 import { getBalanceStudentEcas, getStudentEcas } from '../operations/Chain'
+import { sharePortfolio } from '../operations/Auth/index';
+import { PORTFOLIO_LINK } from '../../const'
 
 interface EcaRequestInformation {
     title: string;
@@ -282,4 +284,13 @@ export const getBlockchainEcasCtrl = async (req, res: Response) => {
     } catch (error) {
         res.status(500).json({ message: 'Error: ', error });
     }
+}
+
+export const sharePortfolioCtrl = async(req, res: Response) => {
+    console.log('I am here');
+    const { id } = req.authData;
+    const token = await sharePortfolio(id);
+    return res.json({
+        link: `${PORTFOLIO_LINK}/${token}` 
+    })
 }
