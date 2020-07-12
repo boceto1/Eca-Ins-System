@@ -67,3 +67,37 @@ export function* getBlockchainEcas() {
     const { data } = yield call(request, config);
     return data;
 }
+
+export function* createSharedPortfolio() {
+    const config = {
+        method: 'post',
+        url: `/ecas/share` ,
+        bypassErrorHandler: true,
+    };
+
+    const { data } = yield call(request, config);
+    return data;
+}
+
+export function* getPortfolioBalanceSummary(token){
+    const config = {
+        method: 'get',
+        url: `/ecas/portfolio/balance/${token}`,
+        bypassErrorHandler: true,
+    };
+
+    const { data } = yield call(request, config);
+    return data;
+}
+
+export function* getPortfolioBlockchainEcas(token) {
+    console.log(token);
+    const config = {
+        method: 'get',
+        url: `/ecas/portfolio/blockchain/${token}` ,
+        bypassErrorHandler: true,
+    };
+
+    const { data } = yield call(request, config);
+    return data;
+}

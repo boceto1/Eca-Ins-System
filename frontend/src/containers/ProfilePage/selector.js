@@ -15,6 +15,12 @@ export const makeSelectBlockchainEcas = () =>
         ({ ecas }) => ecas,
     );
 
+export const makeSelectLinkPortfolio = () =>
+    createSelector(
+        selectProfile,
+        ({ link }) => link,
+    );
+
 export const makeSelectLoadingBalance = () =>
     createSelector(
         selectProfile,
@@ -27,6 +33,12 @@ export const makeSelectLoadingEcas = () =>
         ({ loadingEcas }) => loadingEcas,
     );
 
+export const makeSelectLoadingLink = () =>
+    createSelector(
+        selectProfile,
+        ({ loadingLink }) => loadingLink,
+    );
+
 export const makeSelectBalanceError = () =>
     createSelector(
         selectProfile,
@@ -37,4 +49,10 @@ export const makeSelectEcasError = () =>
     createSelector(
         selectProfile,
         ({ errorEcas }) => errorEcas,
+    );
+
+export const makeSelectLinkError = () => 
+    createSelector(
+        selectProfile,
+        ({ errorLink }) => errorLink,
     );

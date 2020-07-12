@@ -6,26 +6,40 @@ export const key = 'profile';
 export const initialState = {
     balance: null,
     ecas: [],
+    link: null,
     loadingBalance: false,
     loadingEcas: false,
+    loadingLink: false,
     errorBalance: false,
     errorEcas: false,
+    errorLink: false,
 }
 
 export const {
   getBalance,
   getBlockchainEcas,
+  getShareLink
 } = createActions({
     GET_BALANCE: {
-      REQUEST: () => null,
+      REQUEST: (token) => ({ token }),
       SUCCESS: balance => ({ balance }),
       FAILURE: error => ({ error })
     },
     GET_BLOCKCHAIN_ECAS:{
-      REQUEST: () => null,
+      REQUEST: (token) => ({ token }),
       SUCCESS: ecas => ({ ecas }),
       FAILURE: error => ({ error })
     },
+    GET_BLOCKCHAIN_ECAS:{
+        REQUEST: (token) => ({ token }),
+        SUCCESS: ecas => ({ ecas }),
+        FAILURE: error => ({ error })
+      },
+    GET_SHARE_LINK: {
+        REQUEST: () => null,
+        SUCCESS: link => ({ link }),
+        FAILURE: error => ({ error })
+    }
 },  { prefix: 'src/containers/ProfilePage'});
 
 export default handleActions({
@@ -52,5 +66,17 @@ export default handleActions({
     [getBlockchainEcas.failure]: produce((draft, { payload }) => {
         draft.loadingEcas = false;
         draft.errorEcas = payload;
+    }),
+    [getShareLink.request]: produce(draft => {
+        draft.loadingLink = true;
+    }),
+    [getShareLink.success]: produce((draft, { payload }) => {
+        const { link } = payload;
+        draft.loadingLink = false;
+        draft.link = link.link;
+    }),
+    [getShareLink.failure]: produce((draft, { payload }) => {
+        draft.loadingLink = false;
+        draft.errorLink = payload;
     }),
 }, initialState);

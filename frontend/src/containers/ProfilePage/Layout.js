@@ -37,6 +37,20 @@ export const SoftSkillsList = styled.div`
     margin-left: 10px;
   }
 `
+
+export const SharedLink = styled.div`
+  margin: 10px;
+  align-self: center;
+  button {  
+    width: 70px;
+    height: 30px;
+    background: #D3AC2B;
+    border-radius: 4px;
+    color: #F4F3EA;
+    font-size: medium;
+  }
+`;
+
 export const Table = styled.table`
     background: #CBD0D8;
     border: 1px solid #333D51;
@@ -66,3 +80,4 @@ export const TableRow = styled.tr`
     color: #F4F3EA;
   }
 `;
+
