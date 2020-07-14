@@ -32,7 +32,7 @@ export const {
 } = createActions(
     {
         LOGIN: {
-            REQUEST: (name, password, type) => ({ name, password, type }),
+            REQUEST: (nickname, password, type) => ({ nickname, password, type }),
             SUCCESS: (user, rol) => ({
                 user,
                 rol,

@@ -6,6 +6,7 @@ interface CustomSchema {
 }
 
 export interface Student extends CustomSchema {
+    nickname: string,
     name: string;
     password: string;
     keys: {
@@ -15,6 +16,7 @@ export interface Student extends CustomSchema {
 }
 
 export interface Professor extends CustomSchema {
+    nickname: string,
     name: string;
     speciality: string;
     password: string;

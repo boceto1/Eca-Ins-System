@@ -37,13 +37,13 @@ export function* initializeAuth() {
 export function* loginRequestSaga({ payload }) {
     try {
             const response = yield call(authService.logIn,
-            payload.name,
+            payload.nickname,
             payload.password,
             payload.type);
             
             if(response.token) {
                 yield put(setToken(response.token));
-                yield put(login.success(payload.name, payload.type));
+                yield put(login.success(payload.nickname, payload.type));
             } else {
                 yield put(login.failure('Invalid email or password'));
             }

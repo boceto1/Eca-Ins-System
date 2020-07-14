@@ -17,7 +17,7 @@ import {
 
 function LoginPage ({ error, loading, authenticated, location, requestLogin }) {
 
-    const [name, setName] = useState('');
+    const [nickname, setNickname] = useState('');
     const [password, setPassword] = useState('');
 
     if(authenticated){
@@ -26,13 +26,13 @@ function LoginPage ({ error, loading, authenticated, location, requestLogin }) {
     }
 
     const handleChangeName = (event) =>
-        setName(event.target.value);
+        setNickname(event.target.value);
     
     const handleChangePass = (event) =>
         setPassword(event.target.value);
 
     const handleSubmit = (type) => {
-        requestLogin(name, password, type)
+        requestLogin(nickname, password, type)
     }
 
     return(
@@ -47,7 +47,7 @@ function LoginPage ({ error, loading, authenticated, location, requestLogin }) {
                         <InformationInput 
                             type="text"
                             placeholder="Put your name"
-                            value={name}
+                            value={nickname}
                             onChange={handleChangeName}
                             required
                         />

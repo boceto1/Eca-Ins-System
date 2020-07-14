@@ -14,6 +14,9 @@ export const findStudentById = async (id: ObjectId): Promise<any> =>
 export const findStudentByName = async (name: string): Promise<any> =>
   STUDENT.findOne({ name });
 
+export const findStudentByNickname = async (nickname: string): Promise<any> =>
+  STUDENT.findOne({ nickname });
+
 export const updateStudentById = async (
   id: ObjectId,
   student: Student,

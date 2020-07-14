@@ -15,19 +15,19 @@ import {
     ButtonElement
 } from './Layout';
 
-function EcaPage({        
-    eca, 
+function EcaPage({
+    eca,
     approvedEca,
-    loading, 
+    loading,
     approving,
-    error, 
-    rol, 
-    skills ,
-    getEca, 
-    logout, 
+    error,
+    rol,
+    skills,
+    getEca,
+    logout,
     approveEca,
     match
- }) {
+}) {
     useEffect(() => {
         getEca(match.params.id);
     }, []);
@@ -46,11 +46,11 @@ function EcaPage({
     }
 
     function showSoftSkillsToBeSelected() {
-    const ecas = skills.map(skill => <option value={skill._id+','+skill.name}>{skill.name}</option>);
-    ecas.unshift(<option value="0" selected="selected" disabled>Select Soft Skill</option>)
+        const ecas = skills.map(skill => <option value={skill._id + ',' + skill.name}>{skill.name}</option>);
+        ecas.unshift(<option value="0" selected="selected" disabled>Select Soft Skill</option>)
         return (
             <>
-                <TextAreaElement value={softSkills}/>
+                <TextAreaElement value={softSkills} />
                 <SelectElement onChange={handleSelectSoftSkills}>
                     {ecas}
                 </SelectElement>
@@ -71,7 +71,7 @@ function EcaPage({
 
     const handleApproveEca = () => {
         approveEca(eca._id, ecaSoftSkills);
-    }   
+    }
 
 
     return (
@@ -102,8 +102,8 @@ function EcaPage({
                             <LabelElement>
                                 <h2>
                                     <Title>Status: </Title>
-                                    En Proceso
-                </h2>
+                                    {eca.softSkills ? 'Approved' : 'Processing'}
+                                </h2>
                             </LabelElement>
                         </LabelInfo>
                         <LabelInfo>
@@ -129,10 +129,10 @@ function EcaPage({
                         <LabelInfo>
                             {rol === 'professor' && !isEmpty(skills) ? (
                                 <>
-                                <Title>Soft Skills</Title>
-                                <div>
-                                    {showSoftSkillsToBeSelected()}
-                                </div>
+                                    <Title>Soft Skills</Title>
+                                    <div>
+                                        {showSoftSkillsToBeSelected()}
+                                    </div>
                                 </>
                             ) : (
                                     <>
@@ -150,7 +150,7 @@ function EcaPage({
                             </h4>
                         </LabelInfo>
                         {rol === 'professor' && (
-                            <ButtonElement  onClick={handleApproveEca}>Approve</ButtonElement>
+                            <ButtonElement onClick={handleApproveEca}>Approve</ButtonElement>
                         )}
                     </Wrap >
 

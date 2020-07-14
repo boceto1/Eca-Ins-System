@@ -4,35 +4,35 @@ import { Professor, Student } from '../../types';
 import { createNewLoginToken, createNewPortfolioToken } from '../Auth/jwt';
 import {
   createProfessor,
-  findProfessorByName,
+  findProfessorByNickname,
 } from '../DB/professor.operation';
-import { createStudent, findStudentByName } from '../DB/student.operation';
+import { createStudent, findStudentByNickname } from '../DB/student.operation';
 import { exportKey, generateKeys } from './crypto';
 
 interface StudentInfoRequest {
-  name: string;
+  nickname: string;
   password: string;
 }
 
 interface ProfessorInfoRequest {
-  name: string;
+  nickname: string;
   speciality: string;
   password: string;
 }
 
 interface StudentResponse {
-  name: string;
+  nickname: string;
   keys: object;
 }
 
 interface ProfessorResponse {
-  name: string;
+  nickname: string;
   speciality: string;
   keys: object;
 }
 
 interface LoginInfoRequest {
-  name: string;
+  nickname: string;
   password: string;
   type: 'student' | 'professor';
 }
@@ -41,7 +41,7 @@ export const signUpStudent = async (
   studentInfoRequest: StudentInfoRequest,
 ): Promise<StudentResponse> => {
   const newStudent = {} as Student;
-  newStudent.name = studentInfoRequest.name;
+  newStudent.nickname = studentInfoRequest.nickname;
   newStudent.password = sha256(studentInfoRequest.password);
   const key = generateKeys();
   newStudent.keys = {
@@ -51,7 +51,7 @@ export const signUpStudent = async (
   const registeredStudent = await createStudent(newStudent);
 
   return {
-    name: registeredStudent.name,
+    nickname: registeredStudent.nickname,
     keys: registeredStudent.keys,
   };
 };
@@ -60,7 +60,7 @@ export const signUpProfessor = async (
   professorInfoRequest: ProfessorInfoRequest,
 ): Promise<ProfessorResponse> => {
   const newProfessor = {} as Professor;
-  newProfessor.name = professorInfoRequest.name;
+  newProfessor.nickname = professorInfoRequest.nickname;
   newProfessor.password = sha256(professorInfoRequest.password);
   newProfessor.speciality = professorInfoRequest.speciality;
 
@@ -72,7 +72,7 @@ export const signUpProfessor = async (
   const registeredProfessor = await createProfessor(newProfessor);
 
   return {
-    name: registeredProfessor.name,
+    nickname: registeredProfessor.nickname,
     speciality: registeredProfessor.speciality,
     keys: registeredProfessor.keys,
   };
@@ -81,10 +81,10 @@ export const signUpProfessor = async (
 export const login = async (
   loginInfoRequest: LoginInfoRequest,
 ): Promise<any> => {
-  const { name, password, type } = loginInfoRequest;
+  const { nickname, password, type } = loginInfoRequest;
 
   if (type === 'student') {
-    const user = await findStudentByName(name);
+    const user = await findStudentByNickname(nickname);
     if (!user) {
       return null;
     }
@@ -97,7 +97,7 @@ export const login = async (
   }
 
   if (type === 'professor') {
-    const user = await findProfessorByName(name);
+    const user = await findProfessorByNickname(nickname);
     if (!user) {
       return null;
     }

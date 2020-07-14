@@ -7,6 +7,7 @@ const keysSchema = new Schema({
 
 const studentSchema = new Schema({
     name: { type: String, required: true },
+    nickname: { type: String, required: true },
     password: { type: String, required: true },
     keys: keysSchema,
 });
