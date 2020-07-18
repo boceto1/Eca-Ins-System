@@ -10,10 +10,7 @@
       "allowJs": true,
       "forceConsistentCasingInFileNames": true,
     },
-    "include": [
-      "**.ts"
-    ],
     "exclude": [
       "./frontend"
     ]
-  }
+  } 
