@@ -12,9 +12,11 @@ import { exportKey, generateKeys } from './crypto';
 interface StudentInfoRequest {
   nickname: string;
   password: string;
+  name: string;
 }
 
 interface ProfessorInfoRequest {
+  name: string;
   nickname: string;
   speciality: string;
   password: string;
@@ -42,6 +44,7 @@ export const signUpStudent = async (
 ): Promise<StudentResponse> => {
   const newStudent = {} as Student;
   newStudent.nickname = studentInfoRequest.nickname;
+  newStudent.name = studentInfoRequest.name;
   newStudent.password = sha256(studentInfoRequest.password);
   const key = generateKeys();
   newStudent.keys = {
@@ -60,6 +63,7 @@ export const signUpProfessor = async (
   professorInfoRequest: ProfessorInfoRequest,
 ): Promise<ProfessorResponse> => {
   const newProfessor = {} as Professor;
+  newProfessor.name = professorInfoRequest.name,
   newProfessor.nickname = professorInfoRequest.nickname;
   newProfessor.password = sha256(professorInfoRequest.password);
   newProfessor.speciality = professorInfoRequest.speciality;

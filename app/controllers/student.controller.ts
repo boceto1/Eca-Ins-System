@@ -8,7 +8,7 @@ import {
 
 export const createStudentCtrl = async (req: Request, res: Response) => {
     try {
-        const result = await signUpStudent({ nickname: req.body.nickname, password: req.body.password });
+        const result = await signUpStudent({ nickname: req.body.nickname, password: req.body.password, name: req.body.name });
         res.status(201).json({
             student: result
         });
