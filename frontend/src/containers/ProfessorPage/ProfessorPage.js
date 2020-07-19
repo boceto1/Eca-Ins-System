@@ -25,7 +25,7 @@ function ProfesorPage({
     }, []); 
 
     const showEcas = () => ecas.map(eca => (<>
-        <TableRow onClick={() => window.location.href = `/ecas/${eca.id}`}>
+        <TableRow onClick={() => window.location.href = `/ecas/${eca.id}`} key={eca.id}>
             <TableElement>{eca.id}</TableElement>
             <TableElement>{eca.title}</TableElement>
             <TableElement>{eca.student}</TableElement>
@@ -44,12 +44,16 @@ function ProfesorPage({
                         <>
                             <Header><h2>No checked ECAs</h2></Header>
                             <Table>
+                                <thead>
                                 <TableRow>
                                     <TableTitle>Id</TableTitle>
                                     <TableTitle>Title</TableTitle>
                                     <TableTitle>Student</TableTitle>
                                 </TableRow>
+                                </thead>
+                                <tbody>
                                 {showEcas()}
+                                </tbody>
                             </Table>
                         </>
                     )}

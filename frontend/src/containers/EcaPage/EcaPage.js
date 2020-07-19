@@ -38,7 +38,7 @@ function EcaPage({
     function showSoftSkills() {
         if (Object.entries(eca).length !== 0) {
             if (eca.softSkills.length !== 0) {
-                return eca.softSkills.map(softSkill => <li>{softSkill}</li>)
+                return eca.softSkills.map(softSkill => <li key={softSkill}>{softSkill}</li>)
             } else {
                 return (<li>No hay soft skills</li>)
             }
@@ -46,7 +46,7 @@ function EcaPage({
     }
 
     function showSoftSkillsToBeSelected() {
-        const ecas = skills.map(skill => <option value={skill._id + ',' + skill.name}>{skill.name}</option>);
+        const ecas = skills.map(skill => <option key={skill._id} value={skill._id + ',' + skill.name}>{skill.name}</option>);
         ecas.unshift(<option value="0" selected="selected" disabled>Select Soft Skill</option>)
         return (
             <>
@@ -110,13 +110,13 @@ function EcaPage({
                             <LabelElement>
                                 <h4>
                                     <Title>Student: </Title>
-                                    {eca.idStudent}
+                                    {eca.student}
                                 </h4>
                             </LabelElement>
                             <LabelElement>
                                 <h4>
                                     <Title>Professor: </Title>
-                                    {eca.idProfessor}
+                                    {eca.professor}
                                 </h4>
                             </LabelElement>
                         </LabelInfo>

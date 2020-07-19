@@ -105,15 +105,19 @@ function ProfilePage({
                     <h3>List ECAs</h3>
                 </Header>
                 <Table>
+                    <thead>
                     <TableRow>
                         <TableTitle>Id</TableTitle>
                         <TableTitle>Title</TableTitle>
                         <TableTitle>Description</TableTitle>
                     </TableRow>
+                    </thead>
+                    <tbody>
                     {loadingEcas || ecas.length === 0 ?
-                        <h3>Loading Balance</h3> :
+                        <TableRow><TableElement>Loading Balance...</TableElement></TableRow> :
                         showBlockchainEcas()
                     }
+                    </tbody>
                 </Table>
             </Wrapper>
             <Footer >Jean Karlo Obando - 2020</Footer>

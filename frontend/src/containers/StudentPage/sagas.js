@@ -33,7 +33,6 @@ export function* insertEcaSaga({ payload }) {
         const response = yield call(ecaService.requestEca, title, description, evidence, idProfessor );
         yield put(insertEca.success(response.eca));
     } catch (error) {
-        console.log(error);
         yield put(insertEca.failure('Error'));
     }
 }

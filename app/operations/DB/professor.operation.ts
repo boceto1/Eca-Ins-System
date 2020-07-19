@@ -10,6 +10,8 @@ export const createProfessor = async (professor: Professor): Promise<any> => {
 
 export const findProfessorById = async (id: ObjectId): Promise<any> => PROFESSOR.findById(id);
 
+export const findProfessorNameById = async (id: ObjectId): Promise<any> => PROFESSOR.findById(id, 'name');
+
 export const findProfessorByName = async (name: string): Promise<any> => PROFESSOR.findOne({ name });
 
 export const findProfessorByNickname = async (nickname: string): Promise<any> => PROFESSOR.findOne({ nickname });

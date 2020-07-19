@@ -34,9 +34,6 @@ export const getBalanceStudentEcas = async (idStudent: string) : Promise<EcaBala
     });
 
     const balance = response.data;
-
-    console.log(balance);
-
     return balance;
 }
 

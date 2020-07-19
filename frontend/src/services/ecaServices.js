@@ -91,7 +91,6 @@ export function* getPortfolioBalanceSummary(token){
 }
 
 export function* getPortfolioBlockchainEcas(token) {
-    console.log(token);
     const config = {
         method: 'get',
         url: `/ecas/portfolio/blockchain/${token}` ,

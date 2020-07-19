@@ -51,7 +51,7 @@ function StudentPage({
     }, [professors]);
 
     const showStudentECAs = () => ecas.map(eca => (
-        <EcaTableRow onClick={() => window.location.href = `/ecas/${eca.id}`}>
+        <EcaTableRow onClick={() => window.location.href = `/ecas/${eca.id}`} key={eca.id}>
             <EcaTableContent>{eca.id}</EcaTableContent>
             <EcaTableContent>{eca.title}</EcaTableContent>
             <EcaTableContent>{eca.status}</EcaTableContent>

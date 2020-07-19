@@ -9,14 +9,15 @@ import {
     getAllExtracurricularActivitiesByStudent,
     getAllExtracurricularActivitiesByProfessor,
 } from '../operations/DB/eca.operation';
-import { findProfessorById } from '../operations/DB/professor.operation';
+import { findProfessorById, findProfessorNameById } from '../operations/DB/professor.operation';
 import { findSoftSkillById } from '../operations/DB/softSkill.operation';
-import { findStudentById } from '../operations/DB/student.operation';
+import { findStudentById, findStudentNameById } from '../operations/DB/student.operation';
 import { setECA } from '../operations/Chain';
 import { ExtracurricularActivity, Professor, Student } from '../types/';
 import { getBalanceStudentEcas, getStudentEcas } from '../operations/Chain'
 import { sharePortfolio } from '../operations/Auth/index';
 import { PORTFOLIO_LINK } from '../../const'
+import { uniq } from 'lodash'
 
 interface EcaRequestInformation {
     title: string;
@@ -190,6 +191,11 @@ export const findECAByIdCtrl = async (req, res: Response) => {
         const foundECA = resFoundECA._doc;
         foundECA.isApproved = foundECA.professorSignature ? true : false;
         
+        const student = await findStudentNameById(resFoundECA.idStudent);
+        const professor = await findProfessorNameById(resFoundECA.idProfessor);
+        foundECA.student = student.name;
+        foundECA.professor = professor.name;
+        
         delete foundECA.professorSignature;
         delete foundECA.studentSignature;
 
@@ -243,13 +249,19 @@ export const getAllProcessingEcasByProfessor = async (req, res: Response) => {
             return;
         }
         
+        const studentIds = uniq(responseEcas.map(eca => eca.idStudent));
+
+        const students = await Promise.all(studentIds.map(id => findStudentNameById(id))); 
+
         const professorEcas = responseEcas
         .filter(eca => !eca.professorSignature)
-        .map(eca => ({ 
-            id: eca._id, 
-            title: eca.title, 
-            student: eca.idStudent,  
-            }));
+        .map(eca => {
+            return { 
+                id: eca._id, 
+                title: eca.title, 
+                student: students.filter(student => student._id == eca.idStudent)[0].name,  
+                }
+        });
         
         res.status(200).json({ ecas: professorEcas });
     } catch (error) {
@@ -288,7 +300,6 @@ export const getBlockchainEcasCtrl = async (req, res: Response) => {
 }
 
 export const sharePortfolioCtrl = async(req, res: Response) => {
-    console.log('I am here');
     const { id } = req.authData;
     const token = await sharePortfolio(id);
     return res.json({
