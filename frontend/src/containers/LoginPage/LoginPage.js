@@ -53,7 +53,7 @@ function LoginPage ({ error, loading, authenticated, location, requestLogin }) {
                         />
                         <InformationInput 
                             type="password"
-                            placeholder="Put your name"
+                            placeholder="Put your password"
                             value={password}
                             onChange={handleChangePass}
                             required

@@ -102,7 +102,7 @@ function EcaPage({
                             <LabelElement>
                                 <h2>
                                     <Title>Status: </Title>
-                                    {eca.softSkills ? 'Approved' : 'Processing'}
+                                    {eca.isApproved ? 'Approved' : 'Processing'}
                                 </h2>
                             </LabelElement>
                         </LabelInfo>

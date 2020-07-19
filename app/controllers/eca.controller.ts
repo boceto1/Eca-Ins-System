@@ -188,6 +188,7 @@ export const findECAByIdCtrl = async (req, res: Response) => {
         }
         const { professorSignature, ...elements} = resFoundECA;
         const foundECA = resFoundECA._doc;
+        foundECA.isApproved = foundECA.professorSignature ? true : false;
         
         delete foundECA.professorSignature;
         delete foundECA.studentSignature;
