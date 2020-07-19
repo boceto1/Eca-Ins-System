@@ -4,7 +4,7 @@ import { makeSelectToken } from '../containers/AuthProvider/selector';
 
 
 const instance = axios.create({
-    baseURL: 'http://localhost:3000/api',
+    baseURL: `${process.env.REACT_APP_SERVER_ROOT}/api`,
 });
 
 const selectToken = makeSelectToken();
