@@ -303,6 +303,6 @@ export const sharePortfolioCtrl = async(req, res: Response) => {
     const { id } = req.authData;
     const token = await sharePortfolio(id);
     return res.json({
-        link: `${PORTFOLIO_LINK}/${token}` 
+        link: `${PORTFOLIO_LINK}/portfolio/${token}` 
     })
 }
