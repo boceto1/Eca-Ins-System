@@ -39,6 +39,7 @@ function LoginPage ({ error, loading, authenticated, location, requestLogin }) {
         <>
             <Navbar>
                 <Link>ECA CHAIN</Link>
+                <Link href='https://youtu.be/hK6UHNTZJGw' target="_blank">Tutorial</Link>
             </Navbar>
             <Wrapper>
                 <Login>
